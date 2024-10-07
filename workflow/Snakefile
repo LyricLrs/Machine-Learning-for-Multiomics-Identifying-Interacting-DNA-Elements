@@ -1,4 +1,4 @@
-configfile: 'config/config_DE.yaml'
+configfile: 'config/config_PBMC.yaml'
 
 rule download_annotations:
     output:
