@@ -15,3 +15,26 @@ Past code and model:
 
 ##  10/03/2004
 Meeting to aggregate questions and information. 8 pm 
+
+## Environment Set-Up
+1. Open NYU HPC: https://ood.hpc.nyu.edu/
+
+2. Open Cluster
+
+3. Clone Repository to Cluster
+`git clone https://github.com/ANNIZHENG/CDS-2024-Fall-Capstone.git`
+
+4. Request Space
+`srun -t 1:00:00 -c 4 --mem=16000 --pty /bin/bash`
+
+5. Snakemake Set Up
+
+```console
+cd CDS-2024-Fall-Capstone
+module load mambaforge/23.1.0
+module load snakemake/6.12.3
+```
+<!-- snakemake -c 1 -->
+
+6. Run Model 
+`snakemake -c <core_number>`
