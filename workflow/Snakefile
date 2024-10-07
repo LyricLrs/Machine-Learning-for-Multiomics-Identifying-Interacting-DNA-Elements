@@ -48,8 +48,8 @@ rule find_highly_variable_genes:
         config['rna']
     output:
         'results/preprocessing/highly_variable_genes.csv'
-    conda:
-        'envs/seurat.yaml'
+    # conda:
+    #     'envs/seurat.yaml'
     script:
         'scripts/find_highly_variable_genes.R'
 
