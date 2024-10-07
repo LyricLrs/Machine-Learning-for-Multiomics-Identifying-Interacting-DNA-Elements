@@ -22,7 +22,9 @@ Meeting to aggregate questions and information. 8 pm
 2. Open Cluster
 
 3. Clone Repository to Cluster
-`git clone https://github.com/ANNIZHENG/CDS-2024-Fall-Capstone.git`
+```console
+git clone https://github.com/ANNIZHENG/CDS-2024-Fall-Capstone.git
+```
 
 4. Request Space
 `srun -t 1:00:00 -c 4 --mem=16000 --pty /bin/bash`
@@ -31,6 +33,8 @@ Meeting to aggregate questions and information. 8 pm
 
 ```console
 cd CDS-2024-Fall-Capstone
+mkdir -p cache
+export CONDA_PKGS_DIRS=cache
 module load mambaforge/23.1.0
 module load snakemake/6.12.3
 ```
