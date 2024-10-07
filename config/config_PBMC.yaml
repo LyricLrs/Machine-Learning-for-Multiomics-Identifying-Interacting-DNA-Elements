@@ -1,0 +1,4 @@
+rna: data/PBMC/rna_matrix.rds
+atac: data/PBMC/atac_matrix.rds
+meta: data/PBMC/metafile.rds
+celltype: 'PBMC'
