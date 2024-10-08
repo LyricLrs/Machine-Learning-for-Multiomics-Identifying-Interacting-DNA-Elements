@@ -1,3 +1,5 @@
+library(Matrix)
+
 ## define functions
 #' Interpolate a p-value from quantiles that should be "null scaled"
 #'
