@@ -27,7 +27,9 @@ git clone https://github.com/ANNIZHENG/CDS-2024-Fall-Capstone.git
 ```
 
 4. Request Space
-`srun -t 1:00:00 -c 4 --mem=16000 --pty /bin/bash`
+```
+srun -t 1:00:00 -c 4 --mem=16000 --pty /bin/bash
+```
 
 5. Snakemake Set Up
 
@@ -37,8 +39,11 @@ mkdir -p cache
 export CONDA_PKGS_DIRS=cache
 module load mambaforge/23.1.0
 module load snakemake/6.12.3
+module load macs2/intel/2.2.7.1
 ```
-<!-- snakemake -c 1 -->
+<!-- snakemake -c 4 -->
 
 6. Run Model 
-`snakemake -c <core_number>`
+```
+bash run_snakemake.sh
+```
