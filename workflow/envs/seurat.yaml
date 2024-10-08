@@ -344,6 +344,6 @@ dependencies:
   - zstd=1.5.2=hfc55251_7
   - pip:
       - cython==0.29.36
-      - macs2==2.2.9.1
+      # - macs2==2.2.9.1
       - numpy==1.25.2
 prefix: /data/deyk/karthik/mambaforge/envs/seurat
