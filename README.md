@@ -32,7 +32,7 @@ git clone https://github.com/ANNIZHENG/CDS-2024-Fall-Capstone.git
 4. Request Space (1 hour, 4 core, 100G memory)
 
 ```
-srun -t 1:00:00 -c 4 --mem=100G --pty /bin/bash
+srun -t 1:00:00 --mem=100G --pty /bin/bash
 ```
 
 5. Run Snakemake in HPC
