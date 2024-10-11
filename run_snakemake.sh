@@ -11,10 +11,10 @@ module load snakemake/6.12.3
 module load macs2/intel/2.2.7.1
 
 # create local cache
-mkdir -p $HOME/conda_cache/envs
-mkdir -p $HOME/conda_cache/pkgs
-export CONDA_ENVS_PATH=$HOME/conda_cache/envs
-export CONDA_PKGS_DIRS=$HOME/conda_cache/pkgs
+mkdir -p conda_cache/envs
+mkdir -p conda_cache/pkgs
+export CONDA_ENVS_PATH=conda_cache/envs
+export CONDA_PKGS_DIRS=conda_cache/pkgs
 
 # activate snakemake mamba environment
 source $HOME/.bashrc
