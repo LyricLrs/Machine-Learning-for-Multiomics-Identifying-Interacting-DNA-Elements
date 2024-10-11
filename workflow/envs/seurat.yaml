@@ -347,4 +347,4 @@ dependencies:
       - cython==0.29.36
       # - macs2==2.2.9.1
       - numpy==1.25.2
-prefix: /data/deyk/karthik/mambaforge/envs/seurat
+prefix: workflow/envs/seurat
