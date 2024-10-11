@@ -45,6 +45,7 @@ rm -rf *.txt
 rm -rf *.out
 rm -rf cache
 rm -rf .snakemake/conda/
+conda clean --all
 ```
 
 ## Modifications
