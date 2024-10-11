@@ -16,6 +16,7 @@ source $HOME/.bashrc
 # HPC has its own snakemake so we would use that
 # mamba activate snakemake
 
+# Unlock snakemake (HPC Cluster req.)
 snakemake --unlock
 
 # run snakemake for whole pipeline (ending with volcano plot)
