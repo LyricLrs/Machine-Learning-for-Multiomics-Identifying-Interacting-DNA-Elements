@@ -38,6 +38,15 @@ git pull origin main
 sbatch run_snakemake.sh
 ```
 
+5. Useful commands to clear some memory space
+
+```
+rm -rf *.txt
+rm -rf *.out
+rm -rf cache
+rm -rf .snakemake/conda/
+```
+
 ## Modifications
 
 - `seurat.yaml`: Commented out `macs2`, instead loads HPC's `macs2`
@@ -54,6 +63,7 @@ sbatch run_snakemake.sh
 
 - Error Messages:
 
+**Rule Error**
 ```
 Warning message:
 undefined slot classes in definition of "SCENT": rna(class "dgCMatrix"), atac(class "dgCMatrix") 
@@ -63,9 +73,32 @@ Calls: SCENT_algorithm
 
 RuleException:
 CalledProcessError in line 83 of /scratch/.../workflow/Snakefile:
-Command 'source /share/apps/mambaforge/23.1.0/bin/activate '/scratch/.../.snakemake/conda/b86
-91cb1389694139f08589ae49b38cc'; set -euo pipefail;  Rscript --vanilla /scratch/.../.snakemake
+Command 'source /share/apps/mambaforge/23.1.0/bin/activate '.snakemake/conda/b86
+91cb1389694139f08589ae49b38cc'; set -euo pipefail;  Rscript --vanilla .snakemake
 /scripts/tmp3s56enug.run_SCENT.R' returned non-zero exit status 1.
-  File "/scratch/az1932/CDS-2024-Fall-Capstone/workflow/Snakefile", line 83, in __rule_run_SCENT
+  File "workflow/Snakefile", line 83, in __rule_run_SCENT
   File "/share/apps/python/3.8.6/intel/lib/python3.8/concurrent/futures/thread.py", line 57, in run
+```
+
+**Import Error**
+```
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Select jobs to execute...
+
+Traceback (most recent call last):
+  File ".snakemake/scripts/tmpv9ttqe5u.find_enhancer_pairs.py", line 13, in <module>
+    from scipy.stats import false_discovery_control
+  
+ImportError: cannot import name 'false_discovery_control' from 'scipy.stats' (/share/apps/python/3.8.6/intel/lib/python3.8/site-packages/scipy-1.5.2-py3.8-linux-x86_64.egg/scipy/stats/__init__.py)
+
+RuleException:
+CalledProcessError in line 95 of workflow/Snakefile:
+Command 'source /share/apps/mambaforge/23.1.0/bin/activate '.snakemake/conda/b8b25ebf7b992ff5da2173f9f57ee68b'; set -euo pipefail;  python .snakemake/scripts/tmpv9ttqe5u.find_enhancer_pairs.py' returned non-zero exit status 1.
+  File "workflow/Snakefile", line 95, in __rule_find_enhancer_pairs
+  File "/share/apps/python/3.8.6/intel/lib/python3.8/concurrent/futures/thread.py", line 57, in run
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
 ```
