@@ -26,12 +26,14 @@ Not Home* - In the website, You would find the *Files* tab in the top left, then
 3. Clone or Update the Repository
 
 ```
+# Create
 git clone https://github.com/ANNIZHENG/CDS-2024-Fall-Capstone.git
 
+# Update
 git pull origin main
 ```
 
-4. Run Snakemake in HPC Cluster
+4. Send task to HPC Cluster
 ```
 sbatch run_snakemake.sh
 ```
