@@ -10,10 +10,12 @@ module load mambaforge/23.1.0
 module load snakemake/6.12.3
 module load macs2/intel/2.2.7.1
 
+# create local cache
+export CONDA_ENVS_PATH=$HOME/.conda/envs
+export CONDA_PKGS_DIRS=$HOME/.conda/pkgs
+
 # activate snakemake mamba environment
 source $HOME/.bashrc
-
-# HPC has its own snakemake so we would use that
 # mamba activate snakemake
 
 # run snakemake for whole pipeline (ending with volcano plot)
