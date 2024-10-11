@@ -160,6 +160,11 @@ SCENT_algorithm <- function(object, celltype, ncores){
 
     df2 <- df[df[[object@celltypes]] == celltype,]
 
+    # check if df2 is empty or not
+    if (nrow(df2) == 0) {
+      print("df2 is empty.")
+    }
+
     nonzero_m  <- length( df2$exprs[ df2$exprs > 0] ) / length( df2$exprs )
     nonzero_a  <- length( df2$atac[ df2$atac > 0] ) / length( df2$atac )
 
