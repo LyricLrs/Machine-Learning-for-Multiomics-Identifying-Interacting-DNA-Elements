@@ -23,39 +23,18 @@ Meeting to aggregate questions and information. 8 pm
 
 Not Home* - In the website, You would find the *Files* tab in the top left, then click *Scratch*, then open the console from there.
 
-3. Clone Repository to Cluster
+3. Clone or Update the Repository
 
 ```
 git clone https://github.com/ANNIZHENG/CDS-2024-Fall-Capstone.git
-```
 
-4. Request Space (1 hour, 4 core, 100G memory)
-
-```
-srun -t 1:00:00 --mem=100G --pty /bin/bash
-```
-
-5. Run Snakemake in HPC
-```
-bash run_snakemake.sh
-```
-
-6. Some Useful Commands
-```
-# Remove all created snakemake files (clear memory)
-rm -rf .snakemake/conda/*
-
-# Remove the cache file (clear memory)
-rm -rf cache
-
-# Remove any produced file (clear memory)
-rm  -rf *.txt
-rm -rf results
-
-# Update the console's GitHub reposotiry
 git pull origin main
 ```
-<!-- rm -rf resources -->
+
+4. Run Snakemake in HPC Cluster
+```
+sbatch run_snakemake.sh
+```
 
 ## Modifications
 
@@ -71,8 +50,7 @@ git pull origin main
 
 - `run_SCENT.R` and ``: keeps giving me error messages of RuleException (caused by calculation), so I set up a check (if-else)
 
-Below is the error message. 
-I temporarily prevent it with an if-else check on `nonzero...` variables. 
+- Error Messages:
 
 ```
 Warning message:
