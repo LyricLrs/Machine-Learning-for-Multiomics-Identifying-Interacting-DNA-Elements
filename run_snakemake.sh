@@ -6,8 +6,8 @@
 #BSUB -e run_snakemake.err   # Error file name
 
 # To accommodate HPC's environment
-mkdir -p cache
-export CONDA_PKGS_DIRS=cache
+# mkdir -p cache
+# export CONDA_PKGS_DIRS=cache
 module load mambaforge/23.1.0
 module load snakemake/6.12.3
 module load macs2/intel/2.2.7.1
