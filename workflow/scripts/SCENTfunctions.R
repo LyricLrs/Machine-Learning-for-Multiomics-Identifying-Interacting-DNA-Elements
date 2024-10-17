@@ -160,49 +160,42 @@ SCENT_algorithm <- function(object, celltype, ncores){
 
     df2 <- df[df[[object@celltypes]] == celltype,]
 
-    # check if df2 is empty or not
-    if (nrow(df2) == 0) {
-      print("df2 is empty.")
-    }
-
     nonzero_m  <- length( df2$exprs[ df2$exprs > 0] ) / length( df2$exprs )
     nonzero_a  <- length( df2$atac[ df2$atac > 0] ) / length( df2$atac )
 
-    if (!is.na(nonzero_m) && !is.na(nonzero_a)) {
-      if(nonzero_m > 0.05 & nonzero_a > 0.05){
-        # poisson Regression
-        res_var <- "exprs"
-        pred_var <- c("atac", object@covariates) ###need to add log....
-        formula <- as.formula(paste(res_var, paste(pred_var, collapse = "+"), sep = "~"))
+    if(nonzero_m > 0.05 & nonzero_a > 0.05){
+      # poisson Regression
+      res_var <- "exprs"
+      pred_var <- c("atac", object@covariates) ###need to add log....
+      formula <- as.formula(paste(res_var, paste(pred_var, collapse = "+"), sep = "~"))
 
-        #Estimated Coefficients Obtained without Bootstrapping:
-        base = glm(formula, family = 'poisson', data = df2)
+      #Estimated Coefficients Obtained without Bootstrapping:
+      base = glm(formula, family = 'poisson', data = df2)
 
-        coefs<-summary(base)$coefficients["atac",]
+      coefs<-summary(base)$coefficients["atac",]
 
-        ##Iterative Bootstrapping Procedure: Estimate the Beta coefficients and associate a 2-sided p-value.
-        bs = boot::boot(df2,assoc_poisson, R = 100, formula = formula, stype = 'i', parallel = "multicore", ncpus = ncores)
+      ##Iterative Bootstrapping Procedure: Estimate the Beta coefficients and associate a 2-sided p-value.
+      bs = boot::boot(df2,assoc_poisson, R = 100, formula = formula, stype = 'i', parallel = "multicore", ncpus = ncores)
+      p0 = basic_p(bs$t0[1], bs$t[,1])
+      if(p0<0.1){
+        bs = boot::boot(df2,assoc_poisson, R = 2500, formula = formula,  stype = 'i', parallel = "multicore", ncpus = ncores)
         p0 = basic_p(bs$t0[1], bs$t[,1])
-        if(p0<0.1){
-          bs = boot::boot(df2,assoc_poisson, R = 2500, formula = formula,  stype = 'i', parallel = "multicore", ncpus = ncores)
-          p0 = basic_p(bs$t0[1], bs$t[,1])
-        }
-        # if(p0<0.05){
-          # bs = boot::boot(df2,assoc_poisson, R = 2500, formula = formula,  stype = 'i', parallel = "multicore", ncpus = ncores)
-          # p0 = basic_p(bs$t0[1], bs$t[,1])
-        # }
-        # if(p0<0.01){
-        #   bs = boot::boot(df2,assoc_poisson, R = 25000, formula = formula,  stype = 'i', parallel = "multicore", ncpus = ncores)
-        #   p0 = basic_p(bs$t0[1], bs$t[,1])
-        # }
-        # if(p0<0.001){
-        #   bs = boot::boot(df2,assoc_poisson, R = 50000, formula = formula, stype = 'i', parallel = "multicore", ncpus = ncores)
-        #   p0 = basic_p(bs$t0[1], bs$t[,1])
-        # }
-        out <- data.frame(gene=gene,peak=this_peak,beta=coefs[1],se=coefs[2],z=coefs[3],p=coefs[4],boot_basic_p=p0)
-        # out <- data.frame(gene=gene,peak=this_peak,beta=coefs[1],se=coefs[2],z=coefs[3],p=coefs[4])
-        res<-rbind(res,out)
       }
+#       if(p0<0.05){
+#         bs = boot::boot(df2,assoc_poisson, R = 2500, formula = formula,  stype = 'i', parallel = "multicore", ncpus = ncores)
+#         p0 = basic_p(bs$t0[1], bs$t[,1])
+#       }
+#       if(p0<0.01){
+#         bs = boot::boot(df2,assoc_poisson, R = 25000, formula = formula,  stype = 'i', parallel = "multicore", ncpus = ncores)
+#         p0 = basic_p(bs$t0[1], bs$t[,1])
+#       }
+#       if(p0<0.001){
+#         bs = boot::boot(df2,assoc_poisson, R = 50000, formula = formula, stype = 'i', parallel = "multicore", ncpus = ncores)
+#         p0 = basic_p(bs$t0[1], bs$t[,1])
+#       }
+      out <- data.frame(gene=gene,peak=this_peak,beta=coefs[1],se=coefs[2],z=coefs[3],p=coefs[4],boot_basic_p=p0)
+      # out <- data.frame(gene=gene,peak=this_peak,beta=coefs[1],se=coefs[2],z=coefs[3],p=coefs[4])
+      res<-rbind(res,out)
     }
   }
 
