@@ -43,7 +43,7 @@ sbatch run_snakemake.sh
 ```
 rm -rf *.txt
 rm -rf *.out
-rm -rf cache
+rm -rf conda_cache
 rm -rf .snakemake/conda/
 conda clean --all
 ```
