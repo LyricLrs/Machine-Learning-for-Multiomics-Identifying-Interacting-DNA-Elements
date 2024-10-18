@@ -54,11 +54,11 @@ for (gene_index in 1:ncol(subset_data)) {
       one_one_pairs[[length(one_one_pairs) + 1]] <- paste(gene_names[gene_index], peak1_name, peak2_name, sep = ",")
     }
 
+    }
   gene_zero_zero_list[[gene_names[gene_index]]] <- zero_zero_pairs
   gene_zero_one_list[[gene_names[gene_index]]] <- zero_one_pairs
   gene_one_zero_list[[gene_names[gene_index]]] <- one_zero_pairs
   gene_one_one_list[[gene_names[gene_index]]] <- one_one_pairs
-    }
   }
 
 
@@ -67,11 +67,14 @@ gene_zero_one_list <- unlist(gene_zero_one_list)
 gene_one_zero_list <- unlist(gene_one_zero_list)
 gene_one_one_list <- unlist(gene_one_one_list)
 
+if (!dir.exists("Processed_data_example")) {
+  dir.create("Processed_data_example")
+}
 
-writeLines(gene_zero_zero_list, "gene_zero_zero_list.csv")
-writeLines(gene_zero_one_list, "gene_zero_one_list.csv")
-writeLines(gene_one_zero_list, "gene_one_zero_list.csv")
-writeLines(gene_one_one_list, "gene_one_one_lis.csv")
+writeLines(gene_zero_zero_list, "Processed_data_example/gene_zero_zero_list.csv")
+writeLines(gene_zero_one_list, "Processed_data_example/gene_zero_one_list.csv")
+writeLines(gene_one_zero_list, "Processed_data_example/gene_one_zero_list.csv")
+writeLines(gene_one_one_list, "Processed_data_example/gene_one_one_list.csv")
 
 
 
