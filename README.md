@@ -60,15 +60,6 @@ conda clean --all
 
 - `pandas.yaml` and `seurat.yaml`: added a `scipy=1.14.1` or else `false_discovery_control` could not be imported
 
-**Import Error**
-```
-Traceback (most recent call last):
-  File ".snakemake/scripts/tmpv9ttqe5u.find_enhancer_pairs.py", line 13, in <module>
-    from scipy.stats import false_discovery_control
-  
-ImportError: cannot import name 'false_discovery_control' from 'scipy.stats' (/share/apps/python/3.8.6/intel/lib/python3.8/site-packages/scipy-1.5.2-py3.8-linux-x86_64.egg/scipy/stats/__init__.py)
-```
-
 - `run_SCENT.R`: keeps giving me error messages of RuleException (caused by calculation), so I set up a check (if-else)
 
 **Rule Error**
