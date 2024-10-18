@@ -16,6 +16,8 @@ mkdir -p conda_cache/pkgs
 export CONDA_ENVS_PATH=conda_cache/envs
 export CONDA_PKGS_DIRS=conda_cache/pkgs
 
+conda install -c conda-forge r-roxygen2
+
 # activate snakemake mamba environment
 # source $HOME/.bashrc
 # mamba activate snakemake
