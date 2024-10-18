@@ -17,7 +17,7 @@ export CONDA_ENVS_PATH=conda_cache/envs
 export CONDA_PKGS_DIRS=conda_cache/pkgs
 
 # activate snakemake mamba environment
-source $HOME/.bashrc
+# source $HOME/.bashrc
 # mamba activate snakemake
 
 # run snakemake for whole pipeline (ending with volcano plot)
