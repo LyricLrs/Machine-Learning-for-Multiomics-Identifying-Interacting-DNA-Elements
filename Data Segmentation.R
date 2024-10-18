@@ -3,10 +3,13 @@
 library(Matrix)
 
 atac <- readRDS("data/atac_matrix.rds")
+rna <- readRDS("data/rna_matrix.rds")
 
+dim(rna)
+dim(atac)
 #will be revised later
-subset_data <- atac[1:100, 1:10] 
-print(subset_data)
+subset_data <- atac[1:100, 1:1000] 
+# print(subset_data)
 
 peak_names <- rownames(subset_data)
 gene_names <- colnames(subset_data)
