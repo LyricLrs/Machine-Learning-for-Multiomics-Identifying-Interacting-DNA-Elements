@@ -6,8 +6,8 @@
 import numpy as np
 import pandas as pd
 import itertools
-## from scipy.stats import false_discovery_control
-from statsmodels.stats.multitest import multipletests
+import scipy
+from scipy.stats import false_discovery_control
 
 
 # concatenate all peak-gene results across 16 SCENT batch runs
@@ -26,9 +26,7 @@ peak_gene_results = pd.concat(peak_gene_results)
 # peak_gene_results = pd.concat(peak_gene_results)
 
 # perform multiple testing correction on p-values
-## peak_gene_results['adj_p'] = false_discovery_control(peak_gene_results['boot_basic_p'])
-reject, pvals_corrected, _, _ = multipletests(peak_gene_results['boot_basic_p'], alpha=0.05, method='fdr_bh')
-peak_gene_results['adj_p'] = pvals_corrected
+peak_gene_results['adj_p'] = false_discovery_control(peak_gene_results['boot_basic_p'])
 
 # filter for all enhancer-gene pairs with an FDR < 0.1
 peak_gene_results = peak_gene_results[peak_gene_results['adj_p'] < 0.1]
