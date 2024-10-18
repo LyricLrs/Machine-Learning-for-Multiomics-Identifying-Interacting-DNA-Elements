@@ -2,7 +2,7 @@
 # install.packages('IRkernel')
 library(Matrix)
 
-atac <- readRDS("Data/atac_matrix.rds")
+atac <- readRDS("data/atac_matrix.rds")
 
 #will be revised later
 subset_data <- atac[1:100, 1:10] 
