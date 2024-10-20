@@ -35,17 +35,13 @@ git pull origin main
 
 4. Send task to HPC Cluster
 ```
-sbatch run_snakemake.sh
+sbatch --time=04:00:00 run_snakemake.sh
 ```
 
-5. Useful commands to clear some memory space
+5. Useful command to clear some memory space
 
 ```
-rm -rf *.txt
-rm -rf *.out
-rm -rf conda_cache
-rm -rf .snakemake/conda/
-conda clean --all
+rm -rf *.txt && rm -rf *.out && rm -rf conda_cache && rm -rf .snakemake/conda/ && conda clean --all
 ```
 
 ## Modifications
@@ -61,12 +57,3 @@ conda clean --all
 - `pandas.yaml` and `seurat.yaml`: added a `scipy=1.14.1` or else `false_discovery_control` could not be imported
 
 - `run_SCENT.R`: keeps giving me error messages of RuleException (caused by calculation), so I set up a check (if-else)
-
-**Rule Error**
-```
-Warning message:
-undefined slot classes in definition of "SCENT": rna(class "dgCMatrix"), atac(class "dgCMatrix") 
-Error in if (nonzero_m > 0.05 & nonzero_a > 0.05) { : 
-  missing value where TRUE/FALSE needed
-Calls: SCENT_algorithm
-```
