@@ -31,6 +31,8 @@ peak_gene_results['adj_p'] = false_discovery_control(peak_gene_results['boot_bas
 # filter for all enhancer-gene pairs with an FDR < 0.1
 peak_gene_results = peak_gene_results[peak_gene_results['adj_p'] < 0.1]
 
+print(peak_gene_results['adj_p']) # Ensure Results
+
 # write significant peak-gene pairs to output file (for reference)
 peak_gene_results.to_csv(
     snakemake.output[0],
