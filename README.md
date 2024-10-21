@@ -42,7 +42,7 @@ Direct Cluster Training
 sbatch --time=04:00:00 run_snakemake.sh
 ```
 
-Interactive Session
+Interactive Session (Unstable)
 ```
 srun -t 4:00:00 --mem=100G --pty /bin/bash
 bash run_snakemake.sh
