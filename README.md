@@ -35,12 +35,17 @@ git pull origin main
 
 4. Send task to HPC Cluster
 ```
+# Cluster
 sbatch --time=04:00:00 run_snakemake.sh
+
+# Interactive Session
+srun -t 4:00:00 --mem=100G --pty /bin/bash
 ```
 
 5. Useful command to clear some memory space
 
 ```
+rm -rf results && rm -rf resources
 rm -rf *.txt && rm -rf *.out && rm -rf conda_cache && rm -rf .snakemake/conda/ && conda clean --all
 ```
 
