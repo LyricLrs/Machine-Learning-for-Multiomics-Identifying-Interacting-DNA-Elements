@@ -72,9 +72,9 @@ rule run_SCENT:
         config['rna'],
         config['atac'],
         config['meta'],
-        'results/filtered_gene_peak_pairs/filtered_gene_peak_pairs_{split}.csv'
+        'results/filtered_gene_peak_pairs/filtered_gene_peak_pairs_{sample}.csv'
     output:
-        'results/SCENT_outputs/SCENT_output_{split}.csv'
+        'results/SCENT_outputs/SCENT_output_{sample}.csv'
     params:
         celltype = config['celltype']
     conda:
@@ -99,9 +99,9 @@ rule run_epistasis_model:
         'results/SEACells_outputs/SEACells_rna_matrix.rds',
         'results/SEACells_outputs/SEACells_atac_matrix.rds',
         'results/SEACells_outputs/SEACells_metadata.rds',
-        'results/enhancer_pairs/enhancer_pairs_{split}.csv'
+        'results/enhancer_pairs/enhancer_pairs_{sample}.csv'
     output:
-        'results/epistasis_models/epistasis_models_{split}.csv'
+        'results/epistasis_models/epistasis_models_{sample}.csv'
     params:
         celltype = config['celltype']
     conda:
