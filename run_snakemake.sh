@@ -18,6 +18,9 @@ export CONDA_PKGS_DIRS=conda_cache/pkgs
 
 conda install -c conda-forge r-roxygen2
 
+# Prevent Lock Error
+snakemake --unlock
+
 # activate snakemake mamba environment
 # source $HOME/.bashrc
 # mamba activate snakemake
