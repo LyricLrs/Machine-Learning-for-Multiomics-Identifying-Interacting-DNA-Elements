@@ -96,9 +96,9 @@ rule find_enhancer_pairs:
 
 rule run_epistasis_model:
     input:
-        'results/SEACells_outputs/SEACells_rna_matrix.rds',
-        'results/SEACells_outputs/SEACells_atac_matrix.rds',
-        'results/SEACells_outputs/SEACells_metadata.rds',
+        config['rna'],
+        config['atac'],
+        config['meta'],
         'results/enhancer_pairs/enhancer_pairs_{sample}.csv'
     output:
         'results/epistasis_models/epistasis_models_{sample}.csv'
