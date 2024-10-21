@@ -25,20 +25,25 @@ Not Home* - In the website, You would find the *Files* tab in the top left, then
 
 3. Clone or Update the Repository
 
+Clone
 ```
-# Create
 git clone https://github.com/ANNIZHENG/CDS-2024-Fall-Capstone.git
+```
 
-# Update
+Update
+```
 git pull origin main
 ```
 
 4. Send task to HPC Cluster
-```
-# Cluster
-sbatch --time=04:00:00 run_snakemake.sh
 
-# Interactive Session
+Direct Cluster Training
+```
+sbatch --time=04:00:00 run_snakemake.sh
+```
+
+Interactive Session
+```
 srun -t 4:00:00 --mem=100G --pty /bin/bash
 ```
 
@@ -49,7 +54,7 @@ rm -rf results && rm -rf resources
 rm -rf *.txt && rm -rf *.out && rm -rf conda_cache && rm -rf .snakemake/conda/ && conda clean --all
 ```
 
-## Modifications
+<!-- ## Modifications
 
 - `seurat.yaml`: Commented out `macs2`, instead loads HPC's `macs2`
 
@@ -61,4 +66,4 @@ rm -rf *.txt && rm -rf *.out && rm -rf conda_cache && rm -rf .snakemake/conda/ &
 
 - `pandas.yaml` and `seurat.yaml`: added a `scipy=1.14.1` or else `false_discovery_control` could not be imported
 
-- `run_SCENT.R`: keeps giving me error messages of RuleException (caused by calculation), so I set up a check (if-else)
+- `run_SCENT.R`: keeps giving me error messages of RuleException (caused by calculation), so I set up a check (if-else) -->
