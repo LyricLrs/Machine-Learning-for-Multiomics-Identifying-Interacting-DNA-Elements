@@ -5,6 +5,8 @@
 #BSUB -o run_snakemake.out   # Output file name
 #BSUB -e run_snakemake.err   # Error file name
 
+conda install -c conda-forge r-roxygen2
+
 # To accommodate HPC's environment
 module load mambaforge/23.1.0
 module load snakemake/6.12.3
@@ -15,8 +17,6 @@ mkdir -p conda_cache/envs
 mkdir -p conda_cache/pkgs
 export CONDA_ENVS_PATH=conda_cache/envs
 export CONDA_PKGS_DIRS=conda_cache/pkgs
-
-conda install -c conda-forge r-roxygen2
 
 # Prevent Lock Error
 snakemake --unlock
