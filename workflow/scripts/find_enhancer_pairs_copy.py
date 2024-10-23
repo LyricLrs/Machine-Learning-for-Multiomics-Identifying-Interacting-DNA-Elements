@@ -13,9 +13,9 @@ from scipy import stats
 # concatenate all peak-gene results across 16 SCENT batch runs
 peak_gene_results = []
 
-for i in np.arange(32):
+for i in np.arange(31):
     peak_gene_results.append(
-        pd.read_csv(f'../../results/SCENT_outputs/SCENT_output_{i}.csv', sep=' ')
+        pd.read_csv(f'../../results/SCENT_outputs/SCENT_output_{i+1}.csv', sep=' ')
     )
 peak_gene_results = pd.concat(peak_gene_results)
 
@@ -79,7 +79,7 @@ enhancer_pair_df = enhancer_pair_df[['gene', 'enhancer_1', 'enhancer_2']]
 enhancer_pair_split_df = np.array_split(enhancer_pair_df, 32)
 
 # write files to output CSV files
-for i in np.arange(32):
+for i in np.arange(31):
     enhancer_pair_split_df[i].to_csv(
-        f'../../results/enhancer_pairs/enhancer_pairs_{i}.csv',
+        f'../../results/enhancer_pairs/enhancer_pairs_{i+1}.csv',
         index=False)
