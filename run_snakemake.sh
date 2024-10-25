@@ -5,8 +5,6 @@
 #BSUB -o run_snakemake.out   # Output file name
 #BSUB -e run_snakemake.err   # Error file name
 
-source $HOME/.bashrc
-
 # To accommodate HPC's environment
 module load mambaforge/23.1.0
 module load snakemake/6.12.3
