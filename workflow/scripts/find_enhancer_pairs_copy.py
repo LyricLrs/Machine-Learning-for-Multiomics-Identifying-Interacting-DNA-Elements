@@ -15,7 +15,7 @@ peak_gene_results = []
 
 for i in np.arange(31):
     peak_gene_results.append(
-        pd.read_csv(f'../../results/SCENT_outputs/SCENT_output_{i+1}.csv', sep=' ')
+        pd.read_csv(f'results/SCENT_outputs/SCENT_output_{i+1}.csv', sep=' ')
     )
 peak_gene_results = pd.concat(peak_gene_results)
 
@@ -35,13 +35,13 @@ print(peak_gene_results['adj_p']) # Ensure Results
 
 # write significant peak-gene pairs to output file (for reference)
 peak_gene_results.to_csv(
-    '../../results/SCENT_peak_gene/significant_peak_gene_associations.csv',
+    'results/SCENT_peak_gene/significant_peak_gene_associations.csv',
     index = False
 )
 
 # write significant genes to separate file (for GSEA)
 unique_genes = peak_gene_results['gene'].unique()
-pd.Series(unique_genes).to_csv('../../results/SCENT_peak_gene/SCENT_gene_set.csv', index = False)
+pd.Series(unique_genes).to_csv('results/SCENT_peak_gene/SCENT_gene_set.csv', index = False)
 
 # get list of genes that have more than 1 significant peak-gene link
 gene_peak_counts = peak_gene_results['gene'].value_counts()
@@ -81,5 +81,5 @@ enhancer_pair_split_df = np.array_split(enhancer_pair_df, 32)
 # write files to output CSV files
 for i in np.arange(31):
     enhancer_pair_split_df[i].to_csv(
-        f'../../results/enhancer_pairs/enhancer_pairs_{i+1}.csv',
+        f'results/enhancer_pairs/enhancer_pairs_{i+1}.csv',
         index=False)
