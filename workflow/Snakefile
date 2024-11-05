@@ -82,17 +82,17 @@ rule run_SCENT:
     script:
         'scripts/run_SCENT.R'
 
-# rule find_enhancer_pairs:
-#     input:
-#         expand('results/SCENT_outputs/SCENT_output_{sample}.csv', sample=SAMPLES)
-#     output:
-#         'results/SCENT_peak_gene/significant_peak_gene_associations.csv',
-#         expand('results/enhancer_pairs/enhancer_pairs_{sample}.csv', sample=SAMPLES),
-#         'results/SCENT_peak_gene/SCENT_gene_set.csv'
-#     conda:
-#         'envs/pandas.yaml'
-#     script:
-#         'scripts/find_enhancer_pairs.py'
+rule find_enhancer_pairs:
+    input:
+        expand('results/SCENT_outputs/SCENT_output_{sample}.csv', sample=SAMPLES)
+    output:
+        'results/SCENT_peak_gene/significant_peak_gene_associations.csv',
+        expand('results/enhancer_pairs/enhancer_pairs_{sample}.csv', sample=SAMPLES),
+        'results/SCENT_peak_gene/SCENT_gene_set.csv'
+    conda:
+        'envs/pandas.yaml'
+    script:
+        'scripts/find_enhancer_pairs.py'
 
 # rule run_epistasis_model:
 #     input:
