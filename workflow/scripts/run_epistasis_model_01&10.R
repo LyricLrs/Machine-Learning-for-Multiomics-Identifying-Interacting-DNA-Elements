@@ -8,11 +8,11 @@ library(boot)
 
 # Read in enhancer pairs with pre-included ATAC and RNA information
 # edit the paths if needed
-rna <- readRDS('/Users/huajingru/Desktop/Fall 2024/Capstone/PBMC/rna_matrix.rds')
-atac <- readRDS('/Users/huajingru/Desktop/Fall 2024/Capstone/PBMC/atac_matrix.rds')
-metadata <- readRDS('/Users/huajingru/Desktop/Fall 2024/Capstone/PBMC/metafile.rds')
+rna <- readRDS('../../data/rna_matrix.rds')
+atac <- readRDS('../../data/atac_matrix.rds')
+metadata <- readRDS('../../data/meta_matrix.rds')
 
-enhancer.pairs <- read.csv('/Users/huajingru/Desktop/Fall 2024/Capstone/CDS-2024-Fall-Capstone/data_processing/11_pairs/11_pairs2.csv')
+enhancer.pairs <- read.csv('../../data_processing/11_pairs/11_pairs2.csv')
 
 desired_celltypes <- c('CD8-Naive')
 
@@ -157,5 +157,5 @@ for (i in 1:nrow(enhancer.pairs)) {
 }
 
 # Write results to separate output files
-write.csv(results_cells_1, 'results/model_results_cells_1.csv', row.names = FALSE)
-write.csv(results_cells_2, 'results/model_results_cells_2.csv', row.names = FALSE)
+write.csv(results_cells_1, '../../results/model_results_cells_1.csv', row.names = FALSE)
+write.csv(results_cells_2, '../../results/model_results_cells_2.csv', row.names = FALSE)
