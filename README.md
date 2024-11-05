@@ -13,15 +13,13 @@ Past code and model:
 1. SCENT (poisson regression) Github: https://github.com/immunogenomics/SCENT
 2. SCAR (regression) Github: https://github.com/snehamitra/SCARlink
 
-##  10/03/2004
+##  10/03/2024
 Meeting to aggregate questions and information. 8 pm 
 
 ## Environment Set-Up
 1. Open NYU HPC: https://ood.hpc.nyu.edu/
 
-2. Open the HPC Console through **Scratch** 
-
-Not Home* - In the website, You would find the *Files* tab in the top left, then click *Scratch*, then open the console from there.
+2. Open the HPC Console
 
 3. Clone or Update the Repository
 
@@ -35,36 +33,44 @@ Update
 git pull origin main
 ```
 
-4. Send task to HPC Cluster
+4. Manually create data folder and upload data
+
+The path should match what's specified in CDS-2024-Fall-Capstone/config/config_PBMC.yaml
+
+```
+cd CDS-2024-Fall-Capstone
+mkdir data
+```
+
+5. Send task to HPC Cluster
 
 Direct Cluster Training
 ```
 sbatch --time=04:00:00 run_snakemake.sh
 ```
 
-Interactive Session (Unstable)
+Interactive Session
 ```
-srun -t 4:00:00 --mem=100G --pty /bin/bash
+srun -t 4:00:00 --mem=200G --pty /bin/bash && bash run_snakemake.sh
 bash run_snakemake.sh
 ```
 
 5. Useful command to clear some memory space
 
 ```
-rm -rf results && rm -rf resources
-rm -rf *.txt && rm -rf *.out && rm -rf conda_cache && rm -rf .snakemake/conda/ && conda clean --all
+# Remove all created files from the pipeline
+rm -rf results && rm -rf resources &&  rm -rf *.txt && rm -rf *.out && rm -rf conda_cache && rm -rf .snakemake/conda/ && conda clean --all
+
+# Create a specific env
+conda env create -f <file_name>.yaml && conda activate <file_name>
+conda deactivate
 ```
 
 <!-- ## Modifications
 
 - `seurat.yaml`: Commented out `macs2`, instead loads HPC's `macs2`
-
 - `run_snakemake.sh`: HPC has its own `snakemake` package, so no need to create one
-
 - `run_snakemake.sh`: HPC uses a different job scheduler, so the original `bsub` command was changed to `sbatch`
-
 - `SCENTfunctions.R`: added a `library(Matrix)` call to import package
 
-- `pandas.yaml` and `seurat.yaml`: added a `scipy=1.14.1` or else `false_discovery_control` could not be imported
-
-- `run_SCENT.R`: keeps giving me error messages of RuleException (caused by calculation), so I set up a check (if-else) -->
+-->
