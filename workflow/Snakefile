@@ -82,51 +82,51 @@ rule run_SCENT:
     script:
         'scripts/run_SCENT.R'
 
-rule find_enhancer_pairs:
-    input:
-        expand('results/SCENT_outputs/SCENT_output_{sample}.csv', sample=SAMPLES)
-    output:
-        'results/SCENT_peak_gene/significant_peak_gene_associations.csv',
-        expand('results/enhancer_pairs/enhancer_pairs_{sample}.csv', sample=SAMPLES),
-        'results/SCENT_peak_gene/SCENT_gene_set.csv'
-    conda:
-        'envs/pandas.yaml'
-    script:
-        'scripts/find_enhancer_pairs.py'
+# rule find_enhancer_pairs:
+#     input:
+#         expand('results/SCENT_outputs/SCENT_output_{sample}.csv', sample=SAMPLES)
+#     output:
+#         'results/SCENT_peak_gene/significant_peak_gene_associations.csv',
+#         expand('results/enhancer_pairs/enhancer_pairs_{sample}.csv', sample=SAMPLES),
+#         'results/SCENT_peak_gene/SCENT_gene_set.csv'
+#     conda:
+#         'envs/pandas.yaml'
+#     script:
+#         'scripts/find_enhancer_pairs.py'
 
-rule run_epistasis_model:
-    input:
-        config['rna'],
-        config['atac'],
-        config['meta'],
-        'results/enhancer_pairs/enhancer_pairs_{split}.csv'
-    output:
-        'results/epistasis_models/epistasis_models_{split}.csv'
-    params:
-        celltype = config['celltype']
-    conda:
-        'envs/seurat.yaml'
-    script:
-        'scripts/run_epistasis_model.R'
+# rule run_epistasis_model:
+#     input:
+#         config['rna'],
+#         config['atac'],
+#         config['meta'],
+#         'results/enhancer_pairs/enhancer_pairs_{split}.csv'
+#     output:
+#         'results/epistasis_models/epistasis_models_{split}.csv'
+#     params:
+#         celltype = config['celltype']
+#     conda:
+#         'envs/seurat.yaml'
+#     script:
+#         'scripts/run_epistasis_model.R'
 
-rule plot_volcano_plot:
-    input:
-        expand('results/epistasis_models/epistasis_models_{sample}.csv', sample=SAMPLES)
-    output:
-        'results/plot/volcano_plot.png'
-    conda:
-        'envs/r.yaml'
-    script:
-        'scripts/plot_interaction_volcano_plot.R'
+# rule plot_volcano_plot:
+#     input:
+#         expand('results/epistasis_models/epistasis_models_{sample}.csv', sample=SAMPLES)
+#     output:
+#         'results/plot/volcano_plot.png'
+#     conda:
+#         'envs/r.yaml'
+#     script:
+#         'scripts/plot_interaction_volcano_plot.R'
 
-rule generate_p_value_tables:
-    input:
-        expand('results/epistasis_models/epistasis_models_{sample}.csv', sample=SAMPLES)
-    output:
-        'results/p_value_tables/significant_epistasis_boot5e-2_threshold.csv',
-        'results/p_value_tables/significant_epistasis_bootFDR10_threshold.csv',
-        'results/p_value_tables/significant_epistasis_boot_gene_wise_FDR10_threshold.csv',
-    conda:
-        'envs/pandas.yaml'
-    script:
-        'scripts/generate_p_value_tables.py'
+# rule generate_p_value_tables:
+#     input:
+#         expand('results/epistasis_models/epistasis_models_{sample}.csv', sample=SAMPLES)
+#     output:
+#         'results/p_value_tables/significant_epistasis_boot5e-2_threshold.csv',
+#         'results/p_value_tables/significant_epistasis_bootFDR10_threshold.csv',
+#         'results/p_value_tables/significant_epistasis_boot_gene_wise_FDR10_threshold.csv',
+#     conda:
+#         'envs/pandas.yaml'
+#     script:
+#         'scripts/generate_p_value_tables.py'
