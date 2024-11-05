@@ -51,7 +51,7 @@ sbatch --time=04:00:00 run_snakemake.sh
 
 Interactive Session
 ```
-srun -t 4:00:00 --mem=200G --pty /bin/bash
+srun -t 1:00:00 --mem 100G --pty /bin/bash
 bash run_snakemake.sh
 ```
 
