@@ -33,21 +33,21 @@ rule run_epistasis_model_01:
     script:
         'scripts/run_epistasis_model_01_10.R'
 
-rule run_epistasis_model_10:
-    input:
-        config['rna'],
-        config['atac'],
-        config['meta'],
-        expand('data_processing/10_pairs/10_pairs{sample}.csv', sample=SAMPLES)
-    output:
-        'results/model_results_cells_10_1.csv',
-        'results/model_results_cells_10_2.csv'
-    params:
-        celltype = config['celltype']
-    conda:
-        'envs/seurat.yaml'
-    script:
-        'scripts/run_epistasis_model_01_10.R'
+# rule run_epistasis_model_10:
+#     input:
+#         config['rna'],
+#         config['atac'],
+#         config['meta'],
+#         expand('data_processing/10_pairs/10_pairs{sample}.csv', sample=SAMPLES)
+#     output:
+#         'results/model_results_cells_10_1.csv',
+#         'results/model_results_cells_10_2.csv'
+#     params:
+#         celltype = config['celltype']
+#     conda:
+#         'envs/seurat.yaml'
+#     script:
+#         'scripts/run_epistasis_model_01_10.R'
 
 # rule download_annotations:
 #     output:
