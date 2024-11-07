@@ -1,98 +1,115 @@
 configfile: 'config/config_PBMC.yaml'
 
-rule download_annotations:
-    output:
-        'resources/gencode.v44.basic.annotation.gtf.gz'
-    shell:
-        'wget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gencode.v44.basic.annotation.gtf.gz '
-        '-P resources/'
-
-rule get_genes_and_peaks:
-    input:
-        config['rna'],
-        config['atac']
-    output:
-        'results/preprocessing/gene_names.csv',
-        'results/preprocessing/peak_names.csv'
-    conda:
-        'envs/r.yaml'
-    script:
-        'scripts/get_gene_and_peak_names.R'
-
-rule annotate_genes_and_peaks:
-    input:
-        'results/preprocessing/gene_names.csv',
-        'results/preprocessing/peak_names.csv',
-        'resources/gencode.v44.basic.annotation.gtf.gz'
-    output:
-        'results/preprocessing/annotated_gene_names.bed',
-        'results/preprocessing/annotated_peak_names.bed'
-    conda:
-        'envs/pandas.yaml'
-    script:
-        'scripts/annotate_genes_and_peaks.py'
-
-rule run_bedtools_window:
-    input:
-        'results/preprocessing/annotated_gene_names.bed',
-        'results/preprocessing/annotated_peak_names.bed'
-    output:
-        'results/preprocessing/gene_peak_pairs.bed'
-    conda:
-        'envs/bedtools.yaml'
-    shell:
-        'bedtools window -a results/preprocessing/annotated_gene_names.bed -b results/preprocessing/annotated_peak_names.bed -w 500000 > results/preprocessing/gene_peak_pairs.bed'
-
-rule find_highly_variable_genes:
-    input:
-        config['rna']
-    output:
-        'results/preprocessing/highly_variable_genes.csv'
-    conda:
-        'envs/seurat.yaml'
-    script:
-        'scripts/find_highly_variable_genes.R'
-
 SAMPLES = range(1, 33)
 
-rule filter_split_peak_gene_pairs:
-    input:
-        'results/preprocessing/gene_peak_pairs.bed',
-        'results/preprocessing/gene_names.csv',
-        'results/preprocessing/highly_variable_genes.csv'
-    output:
-        expand('results/filtered_gene_peak_pairs/filtered_gene_peak_pairs_{sample}.csv', sample=SAMPLES)
-    conda:
-        'envs/pandas.yaml'
-    script:
-        'scripts/filter_gene_peak_pairs.py'
-
-rule run_SCENT:
+rule run_epistasis_model_11:
     input:
         config['rna'],
         config['atac'],
         config['meta'],
-        'results/filtered_gene_peak_pairs/filtered_gene_peak_pairs_{split}.csv'
+        expand('data_processing/11_pairs/11_pairs{sample}.csv', sample=SAMPLES)
     output:
-        'results/SCENT_outputs/SCENT_output_{split}.csv'
+        'results/model_results_cells_1.csv',
     params:
         celltype = config['celltype']
     conda:
-        'envs/SCENT.yaml'
+        'envs/seurat.yaml'
     script:
-        'scripts/run_SCENT.R'
+        'scripts/run_epistasis_model_11.R'
 
-rule find_enhancer_pairs:
-    input:
-        expand('results/SCENT_outputs/SCENT_output_{sample}.csv', sample=SAMPLES)
-    output:
-        'results/SCENT_peak_gene/significant_peak_gene_associations.csv',
-        expand('results/enhancer_pairs/enhancer_pairs_{sample}.csv', sample=SAMPLES),
-        'results/SCENT_peak_gene/SCENT_gene_set.csv'
-    conda:
-        'envs/pandas.yaml'
-    script:
-        'scripts/find_enhancer_pairs.py'
+# rule download_annotations:
+#     output:
+#         'resources/gencode.v44.basic.annotation.gtf.gz'
+#     shell:
+#         'wget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_44/gencode.v44.basic.annotation.gtf.gz '
+#         '-P resources/'
+
+# rule get_genes_and_peaks:
+#     input:
+#         config['rna'],
+#         config['atac']
+#     output:
+#         'results/preprocessing/gene_names.csv',
+#         'results/preprocessing/peak_names.csv'
+#     conda:
+#         'envs/r.yaml'
+#     script:
+#         'scripts/get_gene_and_peak_names.R'
+
+# rule annotate_genes_and_peaks:
+#     input:
+#         'results/preprocessing/gene_names.csv',
+#         'results/preprocessing/peak_names.csv',
+#         'resources/gencode.v44.basic.annotation.gtf.gz'
+#     output:
+#         'results/preprocessing/annotated_gene_names.bed',
+#         'results/preprocessing/annotated_peak_names.bed'
+#     conda:
+#         'envs/pandas.yaml'
+#     script:
+#         'scripts/annotate_genes_and_peaks.py'
+
+# rule run_bedtools_window:
+#     input:
+#         'results/preprocessing/annotated_gene_names.bed',
+#         'results/preprocessing/annotated_peak_names.bed'
+#     output:
+#         'results/preprocessing/gene_peak_pairs.bed'
+#     conda:
+#         'envs/bedtools.yaml'
+#     shell:
+#         'bedtools window -a results/preprocessing/annotated_gene_names.bed -b results/preprocessing/annotated_peak_names.bed -w 500000 > results/preprocessing/gene_peak_pairs.bed'
+
+# rule find_highly_variable_genes:
+#     input:
+#         config['rna']
+#     output:
+#         'results/preprocessing/highly_variable_genes.csv'
+#     conda:
+#         'envs/seurat.yaml'
+#     script:
+#         'scripts/find_highly_variable_genes.R'
+
+# SAMPLES = range(1, 33)
+
+# rule filter_split_peak_gene_pairs:
+#     input:
+#         'results/preprocessing/gene_peak_pairs.bed',
+#         'results/preprocessing/gene_names.csv',
+#         'results/preprocessing/highly_variable_genes.csv'
+#     output:
+#         expand('results/filtered_gene_peak_pairs/filtered_gene_peak_pairs_{sample}.csv', sample=SAMPLES)
+#     conda:
+#         'envs/pandas.yaml'
+#     script:
+#         'scripts/filter_gene_peak_pairs.py'
+
+# rule run_SCENT:
+#     input:
+#         config['rna'],
+#         config['atac'],
+#         config['meta'],
+#         'results/filtered_gene_peak_pairs/filtered_gene_peak_pairs_{split}.csv'
+#     output:
+#         'results/SCENT_outputs/SCENT_output_{split}.csv'
+#     params:
+#         celltype = config['celltype']
+#     conda:
+#         'envs/SCENT.yaml'
+#     script:
+#         'scripts/run_SCENT.R'
+
+# rule find_enhancer_pairs:
+#     input:
+#         expand('results/SCENT_outputs/SCENT_output_{sample}.csv', sample=SAMPLES)
+#     output:
+#         'results/SCENT_peak_gene/significant_peak_gene_associations.csv',
+#         expand('results/enhancer_pairs/enhancer_pairs_{sample}.csv', sample=SAMPLES),
+#         'results/SCENT_peak_gene/SCENT_gene_set.csv'
+#     conda:
+#         'envs/pandas.yaml'
+#     script:
+#         'scripts/find_enhancer_pairs.py'
 
 # rule run_epistasis_model:
 #     input:
