@@ -46,7 +46,7 @@ mkdir data
 
 Direct Cluster Training
 ```
-sbatch --time=04:00:00 run_snakemake.sh
+sbatch --time=48:00:00 run_snakemake.sh
 ```
 
 Interactive Session

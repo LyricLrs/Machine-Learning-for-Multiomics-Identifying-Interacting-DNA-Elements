@@ -22,7 +22,7 @@ rule run_epistasis_model_01:
         config['rna'],
         config['atac'],
         config['meta'],
-        expand('data_processing/01_pairs/01_pairs{sample}.csv', sample=SAMPLES)
+        expand('data_processing/01_pairs/00_pairs{sample}.csv', sample=SAMPLES)
     output:
         'results/model_results_cells_01_1.csv',
         'results/model_results_cells_01_2.csv'
