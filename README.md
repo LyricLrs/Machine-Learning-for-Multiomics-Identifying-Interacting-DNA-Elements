@@ -51,7 +51,7 @@ sbatch --time=04:00:00 run_snakemake.sh
 
 Interactive Session
 ```
-srun -t 4:00:00 --mem=200G --pty /bin/bash && bash run_snakemake.sh
+srun -t 1:00:00 --mem 100G --pty /bin/bash
 bash run_snakemake.sh
 ```
 
@@ -59,11 +59,16 @@ bash run_snakemake.sh
 
 ```
 # Remove all created files from the pipeline
-rm -rf results && rm -rf resources &&  rm -rf *.txt && rm -rf *.out && rm -rf conda_cache && rm -rf .snakemake/conda/ && conda clean --all
+rm -rf results && rm -rf resources
+rm -rf *.txt && rm -rf *.out && rm -rf conda_cache && rm -rf .snakemake/conda/ && conda clean --all
 
 # Create a specific env
-conda env create -f <file_name>.yaml && conda activate <file_name>
+conda env create -f <file_name>.yaml
+conda activate <file_name>
 conda deactivate
+
+# Find top 20 files that take the most space
+du -ah | sort -rh | head -n 20
 ```
 
 <!-- ## Modifications

@@ -8,11 +8,12 @@ library(boot)
 
 # Read in enhancer pairs with pre-included ATAC and RNA information
 # edit the paths if needed
-rna <- readRDS('/Users/huajingru/Desktop/Fall 2024/Capstone/PBMC/rna_matrix.rds')
-atac <- readRDS('/Users/huajingru/Desktop/Fall 2024/Capstone/PBMC/atac_matrix.rds')
-metadata <- readRDS('/Users/huajingru/Desktop/Fall 2024/Capstone/PBMC/metafile.rds')
+rna <- readRDS('data/rna_matrix.rds')
+atac <- readRDS('data/atac_matrix.rds')
+metadata <- readRDS('data/metafile.rds')
 
-enhancer.pairs <- read.csv('/Users/huajingru/Desktop/Fall 2024/Capstone/CDS-2024-Fall-Capstone/data_processing/11_pairs/11_pairs2.csv')
+enhancer.pairs <- read.csv('data_processing/11_pairs/11_pairs1.csv')
+# ... enhancer.pairs <- read.csv('data_processing/11_pairs/11_pairs32.csv')
 
 desired_celltypes <- c('CD8-Naive')
 
