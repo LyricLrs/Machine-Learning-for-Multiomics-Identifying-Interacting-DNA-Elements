@@ -8,14 +8,17 @@ library(boot)
 
 # Read in enhancer pairs with pre-included ATAC and RNA information
 # edit the paths if needed
-rna <- readRDS('data/rna_matrix.rds')
-atac <- readRDS('data/atac_matrix.rds')
-metadata <- readRDS('data/metafile.rds')
+rna <- readRDS(snakemake@input[[1]])
+atac <- readRDS(snakemake@input[[2]])
+metadata <- readRDS(snakemake@input[[3]])
+desired_celltypes <- snakemake@params[['celltype']]
 
-enhancer.pairs <- read.csv('data_processing/11_pairs/11_pairs1.csv')
-# ... enhancer.pairs <- read.csv('data_processing/11_pairs/11_pairs32.csv')
-
-desired_celltypes <- c('CD8-Naive')
+# Combine all data_processing/11_pairs{i}.csv files
+enhancer.pairs <- data.frame()
+for (file in snakemake@input[4:length(snakemake@input)]) {
+    enhancer_temp.pairs <- read.csv(file)
+    enhancer.pairs <- rbind(enhancer.pairs, enhancer_temp.pairs)
+}
 
 rna <- rna[, metadata$celltype %in% desired_celltypes]
 atac <- atac[, metadata$celltype %in% desired_celltypes]
@@ -158,5 +161,5 @@ for (i in 1:nrow(enhancer.pairs)) {
 }
 
 # Write results to separate output files
-write.csv(results_cells_1, 'results/model_results_cells_1.csv', row.names = FALSE)
-write.csv(results_cells_2, 'results/model_results_cells_2.csv', row.names = FALSE)
+write.csv(results_cells_1, snakemake@output[[1]], row.names = FALSE)
+write.csv(results_cells_2, snakemake@output[[2]], row.names = FALSE)
