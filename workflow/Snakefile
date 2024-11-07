@@ -2,20 +2,20 @@ configfile: 'config/config_PBMC.yaml'
 
 SAMPLES = range(1, 33)
 
-rule run_epistasis_model_11:
-    input:
-        config['rna'],
-        config['atac'],
-        config['meta'],
-        expand('data_processing/11_pairs/11_pairs{sample}.csv', sample=SAMPLES)
-    output:
-        'results/model_results_cells_11.csv',
-    params:
-        celltype = config['celltype']
-    conda:
-        'envs/seurat.yaml'
-    script:
-        'scripts/run_epistasis_model_11.R'
+# rule run_epistasis_model_11:
+#     input:
+#         config['rna'],
+#         config['atac'],
+#         config['meta'],
+#         expand('data_processing/11_pairs/11_pairs{sample}.csv', sample=SAMPLES)
+#     output:
+#         'results/model_results_cells_11.csv',
+#     params:
+#         celltype = config['celltype']
+#     conda:
+#         'envs/seurat.yaml'
+#     script:
+#         'scripts/run_epistasis_model_11.R'
 
 rule run_epistasis_model_01:
     input:
