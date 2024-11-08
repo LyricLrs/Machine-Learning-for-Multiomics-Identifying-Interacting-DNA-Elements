@@ -12,19 +12,20 @@ atac <- readRDS(snakemake@input[[2]])
 metadata <- readRDS(snakemake@input[[3]])
 desired_celltypes <- snakemake@params[['celltype']]
 
-# Combine all data_processing/11_pairs{i}.csv files
+# Combine all data_processing/01_pairs{i}.csv files
 enhancer.pairs <- data.frame()
 for (file in snakemake@input[4:length(snakemake@input)]) {
     enhancer_temp.pairs <- read.csv(file)
     enhancer.pairs <- rbind(enhancer.pairs, enhancer_temp.pairs)
 }
+
 rna <- rna[, metadata$celltype %in% desired_celltypes]
 atac <- atac[, metadata$celltype %in% desired_celltypes]
 metadata <- metadata[metadata$celltype %in% desired_celltypes,]
 
 # Create a dataframe to store combined model results
 results <- data.frame(matrix(ncol = 6, nrow = nrow(enhancer.pairs)))
-colnames(results) <- c("gene", "enhancer", "intercept", "beta.estimate", "beta.pvalue", "bootstrap.pvalue")
+#colnames(results) <- c("gene", "enhancers", "intercept", "beta.estimate", "beta.pvalue", "bootstrap.pvalue")
 
 # Define Poisson GLM function for bootstrapping
 poisson.coefficient <- function(data, idx = seq_len(nrow(data)), formula) {
@@ -58,8 +59,8 @@ for (i in 1:nrow(enhancer.pairs)) {
   gene <- enhancer.pairs$gene[i]
   
   # Define cell groups for cells_1 (enhancer.1 active) and cells_2 (enhancer.2 active)
-  cells_1 <- colnames(atac)[atac[enhancer.1, ] == 0 & atac[enhancer.2, ] %in% c(0,1)]
-  cells_2 <- colnames(atac)[atac[enhancer.2, ] == 0 & atac[enhancer.1, ] %in% c(0,1)]
+  cells_1 <- colnames(atac)[atac[enhancer.1, ] == 0 & atac[enhancer.2, ] == 0]
+  cells_2 <- colnames(atac)[atac[enhancer.1, ] == 1 & atac[enhancer.2, ] == 1]
   
   # Combine cells_1 and cells_2 into one dataset
   combined_cells <- unique(c(cells_1, cells_2))
@@ -102,4 +103,4 @@ for (i in 1:nrow(enhancer.pairs)) {
 }
 
 # Write results to a single output file
-write.csv(results, snakemake@output[[1]], row.names = FALSE)
+write.csv(results_cells_1, snakemake@output[[1]], row.names = FALSE)
