@@ -103,4 +103,4 @@ for (i in 1:nrow(enhancer.pairs)) {
 }
 
 # Write results to a single output file
-write.csv(results_cells_1, snakemake@output[[1]], row.names = FALSE)
+write.csv(results, snakemake@output[[1]], row.names = FALSE)
