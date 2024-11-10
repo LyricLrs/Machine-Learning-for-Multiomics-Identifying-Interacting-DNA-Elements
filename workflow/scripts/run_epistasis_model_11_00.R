@@ -12,7 +12,7 @@ atac <- readRDS(snakemake@input[[2]])
 metadata <- readRDS(snakemake@input[[3]])
 desired_celltypes <- snakemake@params[['celltype']]
 
-# Combine all data_processing/01_pairs{i}.csv files
+# Combine all data_processing/11_pairs{i}.csv files
 enhancer.pairs <- data.frame()
 for (file in snakemake@input[4:length(snakemake@input)]) {
     enhancer_temp.pairs <- read.csv(file)
