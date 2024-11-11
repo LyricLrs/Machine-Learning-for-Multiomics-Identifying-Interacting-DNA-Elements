@@ -6,19 +6,14 @@ library(Seurat) # for normalization
 library(dplyr) # for data frames
 library(boot)
 
-# Read in enhancer pairs with pre-included ATAC and RNA information
-# edit the paths if needed
+# read in RNA-seq matrix, ATAC-seq matrix, and cell-level metadata
 rna <- readRDS(snakemake@input[[1]])
 atac <- readRDS(snakemake@input[[2]])
 metadata <- readRDS(snakemake@input[[3]])
 desired_celltypes <- snakemake@params[['celltype']]
 
-# Combine all data_processing/01_pairs{i}.csv files
-enhancer.pairs <- data.frame()
-for (file in snakemake@input[4:length(snakemake@input)]) {
-    enhancer_temp.pairs <- read.csv(file)
-    enhancer.pairs <- rbind(enhancer.pairs, enhancer_temp.pairs)
-}
+# read in enhancer pairs determined from SCENT
+enhancer.pairs <- read.csv(snakemake@input[[4]])
 
 rna <- rna[, metadata$celltype %in% desired_celltypes]
 atac <- atac[, metadata$celltype %in% desired_celltypes]
