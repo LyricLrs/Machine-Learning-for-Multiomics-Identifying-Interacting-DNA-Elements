@@ -26,8 +26,7 @@ snakemake --unlock
 
 # run snakemake for whole pipeline (ending with volcano plot)
 # snakemake --use-conda --jobs 32 --cluster 'bsub -W 48:00 -n 8 -R "rusage[mem=16G]" -o out.%J.txt -e err.%J.txt' results/SCENT_peak_gene/significant_peak_gene_associations.csv
-snakemake --use-conda --jobs 32 --cluster 'sbatch --time=48:00:00 --cpus-per-task=1 --mem=16G -o out.%J.txt -e err.%J.txt' 
-# results/SCENT_peak_gene/significant_peak_gene_associations.csv
+snakemake --use-conda --jobs 32 --cluster 'sbatch --time=48:00:00 --cpus-per-task=1 --mem=16G -o out.%J.txt -e err.%J.txt' results/SCENT_peak_gene/significant_peak_gene_associations.csv
 
 
 # Random comments pertaining to various components of the job submission.
