@@ -20,8 +20,11 @@ atac <- atac[, metadata$celltype %in% desired_celltypes]
 metadata <- metadata[metadata$celltype %in% desired_celltypes,]
 
 # Create dataframes to store epistasis model results for both cells_1 and cells_2
-results_cells_1 <- data.frame(matrix(ncol = 6, nrow = nrow(enhancer.pairs)))
-results_cells_2 <- data.frame(matrix(ncol = 6, nrow = nrow(enhancer.pairs)))
+results_cells_1 <- data.frame(matrix(ncol = 7, nrow = nrow(enhancer.pairs)))
+colnames(results_cells_1) <- c("gene", "enhancer_1", "enhancer_2", "intercept", "beta_estimate", "beta_pvalue", "bootstrap_pvalue")
+
+results_cells_2 <- data.frame(matrix(ncol = 7, nrow = nrow(enhancer.pairs)))
+colnames(results_cells_2) <- c("gene", "enhancer_1", "enhancer_2", "intercept", "beta_estimate", "beta_pvalue", "bootstrap_pvalue")
 
 # Define Poisson GLM function for bootstrapping
 poisson.coefficient <- function(data, idx = seq_len(nrow(data)), formula) {
@@ -101,7 +104,7 @@ for (i in 1:nrow(enhancer.pairs)) {
     }
     
     # add model results to results data frame
-    mdl.vector <- c(gene, enhancer.1, intercept, beta.estimate,
+    mdl.vector <- c(gene, enhancer.1, enhancer.2, intercept, beta.estimate,
                     beta.pvalue, bootstrap.pvalue)
     results_cells_1[i, ] <- mdl.vector
   }
@@ -148,7 +151,7 @@ for (i in 1:nrow(enhancer.pairs)) {
     }
     
     # add model results to results data frame
-    mdl.vector <- c(gene, enhancer.2, intercept, beta.estimate,
+    mdl.vector <- c(gene, enhancer.1, enhancer.2, intercept, beta.estimate,
                     beta.pvalue, bootstrap.pvalue)
     results_cells_2[i, ] <- mdl.vector
     

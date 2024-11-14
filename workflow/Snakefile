@@ -1,4 +1,4 @@
-configfile: 'config/config_DE.yaml'
+configfile: 'config/config_PBMC.yaml'
 
 rule download_annotations:
     output:
@@ -101,7 +101,7 @@ rule run_epistasis_model_01_10:
         'results/SEACells_outputs/SEACells_metadata.rds',
         'results/enhancer_pairs/enhancer_pairs_{split}.csv'
     output:
-        'results/epistasis_models/epistasis_models_{split}.csv'
+        'results/epistasis_models/epistasis_models_01_10_{split}.csv'
     params:
         celltype = config['celltype']
     conda:
@@ -117,9 +117,9 @@ rule run_epistasis_model_11_00:
         'results/SEACells_outputs/SEACells_metadata.rds',
         'results/enhancer_pairs/enhancer_pairs_{split}.csv'
     output:
-        'results/epistasis_models/epistasis_models_{split}.csv'
+        'results/epistasis_models/epistasis_models_11_00_{split}.csv'
     params:
-        celltype = config['celltype']
+        celltype = config['celltype']c
     conda:
         'envs/seurat.yaml'
     script:
