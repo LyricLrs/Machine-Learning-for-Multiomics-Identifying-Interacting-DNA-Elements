@@ -119,5 +119,5 @@ rule run_epistasis_model_01_10:
 
 rule all:
     input:
-        expand('results/epistasis_models/epistasis_models_11_00_{sample}.csv', sample=SAMPLES)
+        expand('results/epistasis_models/epistasis_models_11_00_{sample}.csv', sample=SAMPLES),
         expand('results/epistasis_models/epistasis_models_01_10_{sample}.csv', sample=SAMPLES)
