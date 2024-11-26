@@ -1,5 +1,7 @@
 configfile: 'config/config_PBMC.yaml'
 
+SAMPLES = range(1, 33)
+
 rule all:
     input:
         'results/SCENT_peak_gene/significant_peak_gene_associations.csv',
@@ -51,8 +53,6 @@ rule find_highly_variable_genes:
         'envs/seurat.yaml'
     script:
         'scripts/find_highly_variable_genes.R'
-
-SAMPLES = range(1, 33)
 
 rule filter_split_peak_gene_pairs:
     input:
