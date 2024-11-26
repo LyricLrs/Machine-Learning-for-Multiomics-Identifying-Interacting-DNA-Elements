@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Load necessary modules
 module load mambaforge/23.1.0
 module load snakemake/6.12.3
