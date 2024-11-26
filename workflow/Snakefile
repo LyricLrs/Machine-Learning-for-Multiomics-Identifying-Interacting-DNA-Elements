@@ -1,5 +1,11 @@
 configfile: 'config/config_PBMC.yaml'
 
+rule all:
+    input:
+        'results/SCENT_peak_gene/significant_peak_gene_associations.csv',
+        expand('results/epistasis_models/epistasis_models_01_10_{split}.csv', split=SAMPLES),
+        expand('results/epistasis_models/epistasis_models_11_00_{split}.csv', split=SAMPLES)
+
 rule get_genes_and_peaks:
     input:
         config['rna'],
@@ -65,9 +71,9 @@ rule run_SCENT:
         config['rna'],
         config['atac'],
         config['meta'],
-        'results/filtered_gene_peak_pairs/filtered_gene_peak_pairs_{sample}.csv'
+        'results/filtered_gene_peak_pairs/filtered_gene_peak_pairs_{split}.csv'
     output:
-        'results/SCENT_outputs/SCENT_output_{sample}.csv'
+        'results/SCENT_outputs/SCENT_output_{split}.csv'
     params:
         celltype = config['celltype']
     conda:
@@ -87,29 +93,14 @@ rule find_enhancer_pairs:
     script:
         'scripts/find_enhancer_pairs.py'
 
-rule run_epistasis_model_11_00:
-    input:
-        config['rna'],
-        config['atac'],
-        config['meta'],
-        'results/enhancer_pairs/enhancer_pairs_{sample}.csv'
-    output:
-        'results/epistasis_models/epistasis_models_11_00_{sample}.csv'
-    params:
-        celltype = config['celltype']
-    conda:
-        'envs/seurat.yaml'
-    script:
-        'scripts/run_epistasis_model_11_00.R'
-
 rule run_epistasis_model_01_10:
     input:
         config['rna'],
         config['atac'],
         config['meta'],
-        'results/enhancer_pairs/enhancer_pairs_{sample}.csv'
+        'results/enhancer_pairs/enhancer_pairs_{split}.csv'
     output:
-        'results/epistasis_models/epistasis_models_01_10_{sample}.csv'
+        'results/epistasis_models/epistasis_models_01_10_{split}.csv'
     params:
         celltype = config['celltype']
     conda:
@@ -117,7 +108,17 @@ rule run_epistasis_model_01_10:
     script:
         'scripts/run_epistasis_model_01_10.R'
 
-rule all:
+rule run_epistasis_model_11_00:
     input:
-        expand('results/epistasis_models/epistasis_models_11_00_{sample}.csv', sample=SAMPLES),
-        expand('results/epistasis_models/epistasis_models_01_10_{sample}.csv', sample=SAMPLES)
+        config['rna'],
+        config['atac'],
+        config['meta'],
+        'results/enhancer_pairs/enhancer_pairs_{split}.csv'
+    output:
+        'results/epistasis_models/epistasis_models_11_00_{split}.csv'
+    params:
+        celltype = config['celltype']
+    conda:
+        'envs/seurat.yaml'
+    script:
+        'scripts/run_epistasis_model_11_00.R'
