@@ -102,10 +102,6 @@ rule run_epistasis_model_11_00:
     script:
         'scripts/run_epistasis_model_11_00.R'
 
-rule run_epistasis_model_11_00_input:
-    input:
-        expand('results/epistasis_models/epistasis_models_11_00_{sample}.csv', sample=SAMPLES)
-
 rule run_epistasis_model_01_10:
     input:
         config['rna'],
@@ -121,6 +117,7 @@ rule run_epistasis_model_01_10:
     script:
         'scripts/run_epistasis_model_01_10.R'
 
-rule run_epistasis_model_01_10_input:
+rule all:
     input:
+        expand('results/epistasis_models/epistasis_models_11_00_{sample}.csv', sample=SAMPLES)
         expand('results/epistasis_models/epistasis_models_01_10_{sample}.csv', sample=SAMPLES)
