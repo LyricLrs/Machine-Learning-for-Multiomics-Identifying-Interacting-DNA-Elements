@@ -20,6 +20,6 @@ export CONDA_PKGS_DIRS=conda_cache/pkgs
 snakemake --unlock
 
 # Run Snakemake with Conda, specifying your local Conda cache and cluster submission settings
-snakemake --use-conda --conda-prefix $HOME/conda_cache/envs \
+snakemake --use-conda --conda-prefix conda_cache/envs \
     --jobs 32 \
     --cluster 'bsub -W 48:00 -n 8 -R "rusage[mem=16G]" -o out.%J.txt -e err.%J.txt'
