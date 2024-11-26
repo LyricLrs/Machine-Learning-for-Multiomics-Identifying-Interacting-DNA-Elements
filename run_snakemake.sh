@@ -1,10 +1,3 @@
-#!/bin/bash
-
-#BSUB -W 120:00                 # for 120 hours of wall clock time
-#BSUB -J run_snakemake          # Job title
-#BSUB -o run_snakemake.out      # Output file name
-#BSUB -e run_snakemake.err      # Error file name
-
 # Load necessary modules
 module load mambaforge/23.1.0
 module load snakemake/6.12.3
@@ -20,4 +13,4 @@ export CONDA_PKGS_DIRS=conda_cache/pkgs
 snakemake --unlock
 
 # Run Snakemake with Conda, specifying your local Conda cache and cluster submission settings
-snakemake --use-conda --jobs 32 --cluster 'bsub -W 48:00 -n 8 -R "rusage[mem=16G]" -o out.%J.txt -e err.%J.txt'
+snakemake --use-conda --jobs 32 --cluster 'sbatch --time=48:00:00 --cpus-per-task=1 --mem=16G -o out.%J.txt -e err.%J.txt'
