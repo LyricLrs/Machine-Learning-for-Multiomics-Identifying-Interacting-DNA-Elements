@@ -213,7 +213,7 @@ peak_gene_results = []
 
 for i in np.arange(32):
     peak_gene_results.append(
-        pd.read_csv(f'/scratch/az1932/CDS-2024-Fall-Capstone/results/SCENT_outputs/SCENT_outputs_{i+1}.csv', sep=' ')
+        pd.read_csv(f'/scratch/az1932/CDS-2024-Fall-Capstone/results/SCENT_outputs/SCENT_output_{i+1}.csv', sep=' ')
     )
 peak_gene_results = pd.concat(peak_gene_results)
 
