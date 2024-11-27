@@ -1,4 +1,4 @@
 rna: data/rna_matrix.rds
 atac: data/atac_matrix.rds
 meta: data/metafile.rds
-celltype: 'CD8-Naive'
+celltype: 'CD4-Naive'
