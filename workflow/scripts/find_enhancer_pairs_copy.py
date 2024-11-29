@@ -15,8 +15,12 @@ for i in np.arange(32):
     peak_gene_results.append(pd.read_csv(f'/scratch/az1932/CDS-2024-Fall-Capstone/results/SCENT_outputs/SCENT_output_{i+1}.csv', sep=' '))
 peak_gene_results = pd.concat(peak_gene_results)
 
+print(peak_gene_results.head(3))
+
 # perform multiple testing correction on p-values
 peak_gene_results['adj_p'] = false_discovery_control(peak_gene_results['boot_basic_p'])
+
+print(peak_gene_results['adj_p'])
 
 # filter for all enhancer-gene pairs with an FDR < 0.1
 peak_gene_results = peak_gene_results[peak_gene_results['adj_p'] < 0.1]
