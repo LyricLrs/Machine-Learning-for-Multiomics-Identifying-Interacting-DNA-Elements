@@ -20,7 +20,8 @@ export CONDA_PKGS_DIRS=conda_cache/pkgs
 snakemake --unlock
 
 # Run Snakemake with Conda, specifying your local Conda cache and cluster submission settings
-snakemake --forceall --use-conda --jobs 32 --cluster 'sbatch --time=48:00:00 --mem=32G -o out.%J.txt -e err.%J.txt'
+# --forceall
+snakemake --use-conda --jobs 32 --cluster 'sbatch --time=48:00:00 --mem=32G --cpus-per-task=8 -o out.%J.txt -e err.%J.txt' results/SCENT_peak_gene/significant_peak_gene_associations.csv
 
 # Random comments pertaining to various components of the job submission.
 # .%J adds job ID number to output files
