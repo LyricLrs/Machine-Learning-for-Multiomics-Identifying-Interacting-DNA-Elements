@@ -1,9 +1,9 @@
 #!/bin/bash
 
-#SBATCH -W 120:00                 # for 120 hours of wall clock time
+#SBATCH -W 120:00:00              # for 120 hours of wall clock time
 #SBATCH -J run_snakemake          # Job title
-#SBATCH -o run_snakemake.out   # Output file name
-#SBATCH -e run_snakemake.err   # Error file name
+#SBATCH -o run_snakemake.out      # Output file name
+#SBATCH -e run_snakemake.err      # Error file name
 
 # Load necessary modules
 module load mambaforge/23.1.0
