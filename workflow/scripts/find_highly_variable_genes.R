@@ -11,6 +11,12 @@ library(Seurat)
 
 # read in scRNA-seq matrix into Seurat
 rna <- readRDS(snakemake@input[[1]])
+metadata <- readRDS(snakemake@input[[2]])
+
+desired_celltypes <- snakemake@params[['celltype']]
+
+rna <- rna[, metadata$celltype %in% desired_celltypes]
+
 # rna <- CreateSeuratObject(counts = rna)
 
 # compute highly variable features using the SCTransform method
