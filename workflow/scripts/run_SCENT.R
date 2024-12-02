@@ -11,12 +11,6 @@ rna <- readRDS(rna.path)
 atac <- readRDS(atac.path)
 metadata <- readRDS(metadata.path)
 
-# Extract corresponding data with desired celltype
-desired_celltypes <- snakemake@params[['celltype']]
-rna <- rna[, metadata$celltype %in% desired_celltypes]
-atac <- atac[, metadata$celltype %in% desired_celltypes]
-metadata <- metadata[metadata$celltype %in% desired_celltypes,]
-
 # read in gene-peak pairs and re-order columns for SCENT
 gene.peak <- read.csv(snakemake@input[[4]])
 print(snakemake@input[[4]])

@@ -1,4 +1,4 @@
-configfile: 'config/config_PBMC.yaml'
+configfile: 'config/config_K562.yaml'
 
 rule all:
     input:
@@ -17,13 +17,10 @@ rule download_annotations:
 rule get_genes_and_peaks:
     input:
         config['rna'],
-        config['atac'],
-        config['meta']
+        config['atac']
     output:
         'results/preprocessing/gene_names.csv',
         'results/preprocessing/peak_names.csv'
-    params:
-        celltype = config['celltype']
     conda:
         'envs/r.yaml'
     script:
@@ -55,12 +52,9 @@ rule run_bedtools_window:
 
 rule find_highly_variable_genes:
     input:
-        config['rna'],
-        config['meta']
+        config['rna']
     output:
         'results/preprocessing/highly_variable_genes.csv'
-    params:
-        celltype = config['celltype']
     conda:
         'envs/seurat.yaml'
     script:

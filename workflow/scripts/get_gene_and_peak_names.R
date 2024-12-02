@@ -12,17 +12,10 @@ library(Matrix)
 # get filenames for RNA and ATAC matrices
 rna.path <- snakemake@input[[1]]
 atac.path <- snakemake@input[[2]]
-metadata.path <- snakemake@input[[3]]
 
 # read in RDS structures for RNA and ATAC matrices
 rna <- readRDS(rna.path)
 atac <- readRDS(atac.path)
-metadata <- readRDS(metadata.path)
-
-# Extract corresponding data with desired celltype
-desired_celltypes <- snakemake@params[['celltype']]
-rna <- rna[, metadata$celltype %in% desired_celltypes]
-atac <- atac[, metadata$celltype %in% desired_celltypes]
 
 # filter rna and atac matrices to have minimum 5% non-zero counts for each gene
 rna <- rna[(rowSums(rna > 0) / ncol(rna)) >= 0.05, ]
