@@ -108,7 +108,8 @@ rule run_epistasis_model_01_10:
         config['meta'],
         'results/enhancer_pairs/enhancer_pairs_{split}.csv'
     output:
-        'results/epistasis_models/epistasis_models_01_10_{split}.csv'
+        'results/epistasis_models/epistasis_models_01_10_1_{split}.csv'
+        'results/epistasis_models/epistasis_models_01_10_2_{split}.csv'
     params:
         celltype = config['celltype']
     conda:
