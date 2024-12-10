@@ -125,9 +125,7 @@ rule run_epistasis_model_11_00:
     script:
         'scripts/run_epistasis_model_11_00.R'
 
-# rule all:
-#     input:
-#         'results/SCENT_peak_gene/significant_peak_gene_associations.csv',
-#         'results/SCENT_peak_gene/SCENT_gene_set.csv',
-#         expand('results/epistasis_models/epistasis_models_01_10_{split}.csv', split=SAMPLES),
-#         expand('results/epistasis_models/epistasis_models_11_00_{split}.csv', split=SAMPLES)
+rule all:
+    input:
+        expand("path/to/output/epistasis_01_10_{i}.txt", i=range(1, 33)) +
+        expand("path/to/output/epistasis_11_00_{i}.txt", i=range(1, 33))
