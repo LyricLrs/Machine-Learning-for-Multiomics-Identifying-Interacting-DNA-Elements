@@ -72,9 +72,9 @@ rule run_SCENT:
         config['rna'],
         config['atac'],
         config['meta'],
-        'results/filtered_gene_peak_pairs/filtered_gene_peak_pairs_{split}.csv'
+        expand('results/filtered_gene_peak_pairs/filtered_gene_peak_pairs_{sample}.csv', sample=SAMPLES)
     output:
-        'results/SCENT_outputs/SCENT_output_{split}.csv'
+        expand('results/SCENT_outputs/SCENT_output_{sample}.csv', sample=SAMPLES)
     params:
         celltype = config['celltype']
     conda:
@@ -99,10 +99,10 @@ rule run_epistasis_model_01_10:
         config['rna'],
         config['atac'],
         config['meta'],
-        'results/enhancer_pairs/enhancer_pairs_{split}.csv'
+        expand('results/enhancer_pairs/enhancer_pairs_{sample}.csv', sample=SAMPLES)
     output:
-        'results/epistasis_models/epistasis_models_01_10_1_{split}.csv'
-        'results/epistasis_models/epistasis_models_01_10_2_{split}.csv'
+        expand('results/epistasis_models/epistasis_models_01_10_1_{sample}.csv', sample=SAMPLES)
+        expand('results/epistasis_models/epistasis_models_01_10_2_{sample}.csv', sample=SAMPLES)
     params:
         celltype = config['celltype']
     conda:
@@ -115,9 +115,9 @@ rule run_epistasis_model_11_00:
         config['rna'],
         config['atac'],
         config['meta'],
-        'results/enhancer_pairs/enhancer_pairs_{split}.csv'
+        expand('results/enhancer_pairs/enhancer_pairs_{sample}.csv', sample=SAMPLES)
     output:
-        'results/epistasis_models/epistasis_models_11_00_{split}.csv'
+        exapand('results/epistasis_models/epistasis_models_11_00_{sample}.csv', sample=SAMPLES)
     params:
         celltype = config['celltype']
     conda:
@@ -127,5 +127,5 @@ rule run_epistasis_model_11_00:
 
 rule all:
     input:
-        expand("results/epistasis_models/epistasis_01_10_{i}.txt", i=range(1, 33)) +
-        expand("results/epistasis_models/epistasis_11_00_{i}.txt", i=range(1, 33))
+        expand("results/epistasis_models/epistasis_01_10_{sample}.txt", sample=SAMPLES +
+        expand("results/epistasis_models/epistasis_11_00_{sample}.txt", sample=SAMPLES
