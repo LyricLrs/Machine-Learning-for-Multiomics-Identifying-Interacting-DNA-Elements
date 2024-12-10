@@ -127,5 +127,5 @@ rule run_epistasis_model_11_00:
 
 rule all:
     input:
-        expand("path/to/output/epistasis_01_10_{i}.txt", i=range(1, 33)) +
-        expand("path/to/output/epistasis_11_00_{i}.txt", i=range(1, 33))
+        expand("results/epistasis_models/epistasis_01_10_{i}.txt", i=range(1, 33)) +
+        expand("results/epistasis_models/epistasis_11_00_{i}.txt", i=range(1, 33))
