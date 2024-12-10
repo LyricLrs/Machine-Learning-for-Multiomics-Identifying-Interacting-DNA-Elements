@@ -127,6 +127,6 @@ rule run_epistasis_model_11_00:
 
 rule all:
     input:
-        expand("results/epistasis_models/epistasis_01_10_1_{sample}.txt", sample=SAMPLES),
-        expand("results/epistasis_models/epistasis_01_10_2_{sample}.txt", sample=SAMPLES),
-        expand("results/epistasis_models/epistasis_11_00_{sample}.txt", sample=SAMPLES)
+        expand("results/epistasis_models/epistasis_models_01_10_1_{sample}.txt", sample=SAMPLES),
+        expand("results/epistasis_models/epistasis_models_01_10_2_{sample}.txt", sample=SAMPLES),
+        expand("results/epistasis_models/epistasis_models_11_00_{sample}.txt", sample=SAMPLES)
