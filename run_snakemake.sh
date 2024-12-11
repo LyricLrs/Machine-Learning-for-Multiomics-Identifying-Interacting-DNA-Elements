@@ -20,7 +20,7 @@ snakemake --unlock
 
 # Run Snakemake with Conda, specifying your local Conda cache and cluster submission settings
 # snakemake --forceall --use-conda --jobs 32 --cluster 'sbatch --time=48:00:00 --mem=16G --cpus-per-task=8 -o out.%J.txt -e err.%J.txt'
-snakemake --forceall --use-conda --jobs 32 --cluster 'sbatch --time=48:00:00 --mem=16G --cpus-per-task=8 -o out.%J.txt -e err.%J.txt' -p \
+snakemake --forceall --use-conda --jobs 32 --cluster 'sbatch --time=48:00:00 --mem=32G --cpus-per-task=8 -o out.%J.txt -e err.%J.txt' -p \
 $(echo results/epistasis_models/epistasis_models_01_10_1_{1..32}.csv results/epistasis_models/epistasis_models_01_10_2_{1..32}.csv results/epistasis_models/epistasis_models_11_00_{1..32}.csv)
 
 # Random comments pertaining to various components of the job submission.
