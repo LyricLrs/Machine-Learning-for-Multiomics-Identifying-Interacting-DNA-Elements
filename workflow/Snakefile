@@ -72,9 +72,9 @@ rule run_SCENT:
         config['rna'],
         config['atac'],
         config['meta'],
-        expand('results/filtered_gene_peak_pairs/filtered_gene_peak_pairs_{sample}.csv', sample=SAMPLES)
+        'results/filtered_gene_peak_pairs/filtered_gene_peak_pairs_{split}.csv'
     output:
-        expand('results/SCENT_outputs/SCENT_output_{sample}.csv', sample=SAMPLES)
+        'results/SCENT_outputs/SCENT_output_{split}.csv'
     params:
         celltype = config['celltype']
     conda:
@@ -99,10 +99,10 @@ rule run_epistasis_model_01_10:
         config['rna'],
         config['atac'],
         config['meta'],
-        expand('results/enhancer_pairs/enhancer_pairs_{sample}.csv', sample=SAMPLES)
+        'results/enhancer_pairs/enhancer_pairs_{split}.csv'
     output:
-        expand('results/epistasis_models/epistasis_models_01_10_1_{sample}.csv', sample=SAMPLES),
-        expand('results/epistasis_models/epistasis_models_01_10_2_{sample}.csv', sample=SAMPLES)
+        'results/epistasis_models/epistasis_models_01_10_1_{split}.csv',
+        'results/epistasis_models/epistasis_models_01_10_2_{split}.csv'
     params:
         celltype = config['celltype']
     conda:
@@ -115,9 +115,9 @@ rule run_epistasis_model_11_00:
         config['rna'],
         config['atac'],
         config['meta'],
-        expand('results/enhancer_pairs/enhancer_pairs_{sample}.csv', sample=SAMPLES)
+        'results/enhancer_pairs/enhancer_pairs_{split}.csv'
     output:
-        expand('results/epistasis_models/epistasis_models_11_00_{sample}.csv', sample=SAMPLES)
+        'results/epistasis_models/epistasis_models_11_00_{split}.csv'
     params:
         celltype = config['celltype']
     conda:
