@@ -207,7 +207,6 @@ def false_discovery_control(ps, *, axis=0, method='bh'):
 
     return np.clip(ps, 0, 1)
 
-
 # concatenate all peak-gene results across 16 SCENT batch runs
 peak_gene_results = []
 
