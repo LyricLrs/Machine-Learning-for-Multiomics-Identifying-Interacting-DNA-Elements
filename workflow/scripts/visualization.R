@@ -13,13 +13,42 @@ library(reshape2)
 # iterate through different model output files
 epistasis.models <- data.frame()
 
-# read in epistasis models from batch
-enhancer1 <- read.csv('/Users/lyricli/Documents/Capstone/CDS-2024-Fall-Capstone/results/hpc_model_results/CD8-naive/model_results_cells_10_hpc.csv'
-        ,col.names = c("gene","enhancer1","enhancer2","intercept","beta_estimate","beta_pvalue","bootstrap_pvalue"))
-enhancer2 <- read.csv('/Users/lyricli/Documents/Capstone/CDS-2024-Fall-Capstone/results/hpc_model_results/CD8-naive/model_results_cells_01_hpc.csv'
-        ,col.names = c("gene","enhancer1","enhancer2","intercept","beta_estimate","beta_pvalue","bootstrap_pvalue"))
-interaction <- read.csv('/Users/lyricli/Documents/Capstone/CDS-2024-Fall-Capstone/results/hpc_model_results/CD8-naive/model_results_combined_test_hpc.csv'
-        ,col.names = c("gene", "enhancers", "intercept", "beta.estimate", "beta.pvalue", "bootstrap.pvalue"))
+#enhancer1
+folder_path <- "/Users/lyricli/Documents/Capstone/CDS-2024-Fall-Capstone/results/epistasis_model_output/CD14-mono/enhancer1/"
+file_list <- list.files(path = folder_path, pattern = "epistasis_models_01_10_1_.*\\.csv", full.names = TRUE)
+read_custom_csv <- function(file) {
+  read.csv(file, col.names = c("gene", "enhancer1", "enhancer2", "intercept", "beta_estimate", "beta_pvalue", "bootstrap_pvalue"))
+}
+enhancer1 <- do.call(rbind, lapply(file_list, read_custom_csv))
+head(enhancer1)
+
+#enhancer2
+folder_path <- "/Users/lyricli/Documents/Capstone/CDS-2024-Fall-Capstone/results/epistasis_model_output/CD14-mono/enhancer2/"
+file_list <- list.files(path = folder_path, pattern = "epistasis_models_01_10_2_.*\\.csv", full.names = TRUE)
+read_custom_csv <- function(file) {
+  read.csv(file, col.names = c("gene", "enhancer1", "enhancer2", "intercept", "beta_estimate", "beta_pvalue", "bootstrap_pvalue"))
+}
+enhancer2 <- do.call(rbind, lapply(file_list, read_custom_csv))
+head(enhancer2)
+
+#interaction
+folder_path <- "/Users/lyricli/Documents/Capstone/CDS-2024-Fall-Capstone/results/epistasis_model_output/CD14-mono/interaction/"
+file_list <- list.files(path = folder_path, pattern = "epistasis_models_11_00_.*\\.csv", full.names = TRUE)
+read_custom_csv <- function(file) {
+  read.csv(file, col.names = c("gene", "enhancers", "intercept", "beta.estimate", "beta.pvalue", "bootstrap.pvalue"))
+}
+interaction <- do.call(rbind, lapply(file_list, read_custom_csv))
+head(interaction)
+
+
+
+# # read in epistasis models from batch
+# enhancer1 <- read.csv('/Users/lyricli/Documents/Capstone/CDS-2024-Fall-Capstone/results/hpc_model_results/CD8-naive/model_results_cells_10_hpc.csv'
+#         ,col.names = c("gene","enhancer1","enhancer2","intercept","beta_estimate","beta_pvalue","bootstrap_pvalue"))
+# enhancer2 <- read.csv('/Users/lyricli/Documents/Capstone/CDS-2024-Fall-Capstone/results/hpc_model_results/CD8-naive/model_results_cells_01_hpc.csv'
+#         ,col.names = c("gene","enhancer1","enhancer2","intercept","beta_estimate","beta_pvalue","bootstrap_pvalue"))
+# interaction <- read.csv('/Users/lyricli/Documents/Capstone/CDS-2024-Fall-Capstone/results/hpc_model_results/CD8-naive/model_results_combined_test_hpc.csv'
+#         ,col.names = c("gene", "enhancers", "intercept", "beta.estimate", "beta.pvalue", "bootstrap.pvalue"))
 
 
 #process interaction matrix
@@ -229,7 +258,7 @@ enhancer.pairs <- read.csv('/Users/lyricli/Documents/Capstone/CDS-2024-Fall-Caps
 # metadata <- metadata[metadata$celltype %in% desired_celltypes,]
 
 # Test with one pair (e.g., i = 1)
-i <- 10
+i <- 1
 enhancer.1 <- enhancer.pairs$enhancer_1[i]
 enhancer.2 <- enhancer.pairs$enhancer_2[i]
 gene <- enhancer.pairs$gene[i]
@@ -249,8 +278,6 @@ plot_data <- data.frame(
   category = categories
 )
 plot_data$normalized_expression <- log1p(plot_data$gene_expression)
-plot_data
-plot_data$gene_expression
 
 # Plot
 violin_plot <- ggplot(plot_data, aes(x = category, y = normalized_expression, fill = category)) +
@@ -282,15 +309,36 @@ ggsave("results/plot/violinplot_enhancer_pair.png", violin_plot)
 # # QQplot for SCENT output 
 library(qqman)
 
-scent <- read.table("/Users/lyricli/Documents/Capstone/CDS-2024-Fall-Capstone/results/SCENT_outputs/SCENT_output_1.csv",
-                    header = TRUE, sep = " ")
+# scent <- read.table("/Users/lyricli/Documents/Capstone/CDS-2024-Fall-Capstone/results/SCENT_outputs/SCENT_output_1.csv",
+#                     header = TRUE, sep = " ")
+
+folder_path <- "/Users/lyricli/Documents/Capstone/CDS-2024-Fall-Capstone/results/SCENT_outputs/CD4-mono/"
+file_list <- list.files(path = folder_path, pattern = "SCENT_output_.*\\.csv", full.names = TRUE)
+read_custom_table <- function(file) {
+  read.table(file, header = TRUE, sep = " ")
+}
+scent <- do.call(rbind, lapply(file_list, read_custom_table))
+head(scent)
+
 scent[0:5,]
 p_values <- scent$"boot_basic_p"  # or data$boot_basic_p
 class(p_values)
 # QQ plot using qqman
-# qq(p_values)  
-par(cex.axis = 1.5, cex.lab = 2)
-qq(p_values, main = "", xlab = "", ylab = "")  # Create plot without default labels
-title(main = "QQ Plot for SCENT output: bootstrap p_value", cex.main = 2.5)  # Add title with custom size
-mtext(side = 1, line = 2.5, "Expected -log10(p)", cex = 2)  # X-axis label
-mtext(side = 2, line = 2.5, "Observed -log10(p)", cex = 2)  # Y-axis label
+
+# Function to generate the QQ plot
+generate_qq_plot <- function() {
+  par(cex.axis = 1.5, cex.lab = 2)  # Set axis and label sizes
+  qq(p_values, main = "", xlab = "", ylab = "")  # Create plot
+  abline(0, 1, col = "red", lwd = 2.5)  # Add a thicker red line
+  title(main = "QQ Plot for SCENT output: bootstrap p_value", cex.main = 2.5)
+  mtext(side = 1, line = 2.5, "Expected -log10(p)", cex = 2)  # X-axis label
+  mtext(side = 2, line = 2.5, "Observed -log10(p)", cex = 2)  # Y-axis label
+}
+
+# Display the plot on the screen
+generate_qq_plot()
+
+# Save the plot to a file
+png("results/plot/QQ_plot_SCENT_output.png", width = 700, height = 800, res = 50)
+generate_qq_plot()
+dev.off()
