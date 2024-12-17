@@ -1,26 +1,17 @@
 # CDS-2024-Fall-Capstone
 
+## References
+1. https://www.nature.com/articles/s41588-024-01682-1 
+2. https://www.nature.com/articles/s41588-024-01689-8
+3. https://www.biorxiv.org/content/10.1101/2023.04.26.538501v2.full
 
-## 09/27/2024
-Familiar with the backgound and go through papaers, mostly Methods.
-
-Paper
-1. https://www.nature.com/articles/s41588-024-01682-1 : Anni
-2. https://www.nature.com/articles/s41588-024-01689-8 : Lyric
-3. https://www.biorxiv.org/content/10.1101/2023.04.26.538501v2.full : Catherine
-
-Past code and model:
+Past codes and models:
 1. SCENT (poisson regression) Github: https://github.com/immunogenomics/SCENT
-2. SCAR (regression) Github: https://github.com/snehamitra/SCARlink
-
-##  10/03/2024
-Meeting to aggregate questions and information. 8 pm 
+2. SCAR (regression) Github: https://github.com/snehamitra/SCARlinka
 
 ## Environment Set-Up
-1. Open NYU HPC: https://ood.hpc.nyu.edu/
-
-2. Open the HPC Console
-
+1. NYU HPC: https://ood.hpc.nyu.edu/
+2. Open HPC Console
 3. Clone or Update the Repository
 
 Clone
@@ -59,8 +50,9 @@ bash run_snakemake.sh
 
 ```
 # Remove all created files from the pipeline
-rm -rf results && rm -rf resources
-rm -rf *.txt && rm -rf *.out && rm -rf conda_cache && rm -rf .snakemake/conda/ && conda clean --all
+rm -rf resources && rm -rf results 
+rm -rf *.txt && rm -rf *.out && rm -rf *.err
+rm -rf conda_cache && rm -rf .snakemake/conda/ && conda clean --all
 
 # Create a specific env
 conda env create -f <file_name>.yaml
@@ -74,8 +66,6 @@ du -ah | sort -rh | head -n 20
 <!-- ## Modifications
 
 - `seurat.yaml`: Commented out `macs2`, instead loads HPC's `macs2`
-- `run_snakemake.sh`: HPC has its own `snakemake` package, so no need to create one
-- `run_snakemake.sh`: HPC uses a different job scheduler, so the original `bsub` command was changed to `sbatch`
 - `SCENTfunctions.R`: added a `library(Matrix)` call to import package
 
 -->
