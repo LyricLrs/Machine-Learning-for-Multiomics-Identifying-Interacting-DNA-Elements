@@ -1,12 +1,8 @@
-directory_path <- "/Users/huajingru/Desktop/Fall_2024/Capstone/CD14-Mono/epistasis_models"
+directory_path <- "epistasis_models"
 
 # List all files that match the pattern
 model_files <- list.files(directory_path, pattern = "11_00_\\d+\\.csv$", full.names = TRUE)
-
-# Read all of them into a list
 model_data_list <- lapply(model_files, read.csv)
-
-# Combine them into a single data frame (assuming they have the same columns)
 model_results <- do.call(rbind, model_data_list)
 
 # # Separate the second column into 'enhancer_1' and 'enhancer_2'
@@ -56,5 +52,5 @@ if (nrow(large_estimates) > 0) {
   )])
   }
   
-  # Save the analysis to a file
-write.csv(large_estimates_analysis, "/Users/huajingru/Desktop/Fall_2024/Capstone/CD14-Mono/epistasis_models_11_00_analysis.csv", row.names = FALSE)
+# Save the analysis to a file
+write.csv(large_estimates_analysis, "epistasis_models_11_00_analysis.csv", row.names = FALSE)

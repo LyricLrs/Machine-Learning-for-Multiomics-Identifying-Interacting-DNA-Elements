@@ -1,14 +1,13 @@
 library(Seurat) 
-library(dplyr) # for data frames
+library(dplyr)
 library(boot)
 library(ggplot2)
 
 library(pscl)
 # edit the paths if needed
-rna <- readRDS('/Users/huajingru/Desktop/Fall_2024/Capstone/PBMC/rna_matrix.rds')
-atac <- readRDS('/Users/huajingru/Desktop/Fall_2024/Capstone/PBMC/atac_matrix.rds')
-metadata <- readRDS('/Users/huajingru/Desktop/Fall_2024/Capstone/PBMC/metafile.rds')
-#enhancer.pairs <- read.csv('/Users/huajingru/Desktop/Fall_2024/Capstone/CD14-Mono/enhancer_pairs_CD14-Mono/enhancer_pairs_1.csv')
+rna <- readRDS('PBMC/rna_matrix.rds')
+atac <- readRDS('PBMC/atac_matrix.rds')
+metadata <- readRDS('PBMC/metafile.rds')
 
 directory_path <- "/Users/huajingru/Desktop/Fall_2024/Capstone/CD14-Mono/enhancer_pairs_CD14-Mono/"
 csv_files <- list.files(directory_path, pattern = "\\.csv$", full.names= TRUE)
@@ -73,4 +72,4 @@ for (i in 1:nrow(enhancer.pairs)) {
 # Print and optionally save the per-pair summary
 cat("Per-Pair Population Summary:\n")
 print(head(per_pair_summary))
-write.csv(per_pair_summary, "/Users/huajingru/Desktop/Fall_2024/Capstone/CD14-Mono/per_pair_population_summary.csv", row.names = FALSE)
+write.csv(per_pair_summary, "per_pair_population_summary.csv", row.names = FALSE)
